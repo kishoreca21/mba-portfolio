@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200">
+  <rect width="800" height="1200" fill="#EDF6F5"/>
+  
+  <rect x="26" y="26" width="748" height="1148" fill="none" stroke="#1F6E6B" stroke-width="3"/>
+  <rect x="38" y="38" width="724" height="1124" fill="none" stroke="#1F6E6B" stroke-width="1"/>
+  
+  <text x="400" y="92" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="14"
+        letter-spacing="6" fill="#1F6E6B">OONCHAI · ONE LEAF, MANY WORLDS</text>
+  <text x="400" y="122" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="11"
+        letter-spacing="4" fill="#2A2724" opacity="0.55">WORLD TEA TRAIL · STOP 05 · THE GULF · N° 06/08</text>
+  
+  <circle cx="400" cy="440" r="252" fill="#1F6E6B"/>
+  <circle cx="400" cy="440" r="252" fill="none" stroke="#EDF6F5" stroke-width="2"/>
+  <circle cx="400" cy="440" r="232" fill="#EDF6F5"/>
+  
+  <path d="M340 330 L460 330 L446 560 L354 560 Z" fill="#FBF5F3" stroke="#1F6E6B" stroke-width="5"/>
+  <path d="M348 402 L452 402 L446 560 L354 560 Z" fill="#C98F5A"/>
+  <path d="M352 476 L448 476 L446 560 L354 560 Z" fill="#8C5B2E"/>
+  <ellipse cx="400" cy="330" rx="60" ry="10" fill="none" stroke="#1F6E6B" stroke-width="4"/>
+  <path d="M376 296 C364 268 384 254 376 228 M424 296 C436 268 416 254 424 228"
+        stroke="#1F6E6B" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <ellipse cx="400" cy="598" rx="130" ry="16" fill="none" stroke="#C9A063" stroke-width="5"/>
+  <g fill="#FBF5F3" stroke="#C9A063" stroke-width="3">
+    <rect x="492" y="540" width="26" height="26" rx="4"/>
+    <rect x="522" y="552" width="26" height="26" rx="4"/></g>
+  
+  <text x="400" y="790" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="52"
+        letter-spacing="2" fill="#2A2724" font-weight="bold">IRANI CHAI</text>
+  <text x="400" y="838" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="17"
+        fill="#2A2724" opacity="0.75">Slow-simmered and syrup-deep — the</text>
+  <text x="400" y="866" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="17"
+        fill="#2A2724" opacity="0.75">Deccan-to-Gulf café classic.</text>
+  <rect x="280" y="910" width="240" height="56" rx="28" fill="none" stroke="#1F6E6B" stroke-width="3"/>
+  <text x="400" y="946" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="17"
+        letter-spacing="1" fill="#1F6E6B" font-weight="bold">TRAIL FLIGHT · ₹249</text>
+  
+  <rect y="1040" width="800" height="160" fill="#1E4D3B"/>
+  <path d="M60 1040 L150 1096 L240 1040 Z" fill="#3E7C59" transform="translate(0,4)"/>
+  <path d="M0 1120 L120 1052 L240 1120 Z" fill="#3E7C59"/>
+  <path d="M160 1120 L300 1040 L440 1120 Z" fill="#A8CBB2" opacity="0.45"/>
+  <path d="M560 1120 L680 1052 L800 1120 Z" fill="#3E7C59"/>
+  <path d="M300 1040 L316 1050 L306 1052 L296 1046 Z" fill="#F3B8C6"/>
+  <text x="400" y="1162" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26"
+        letter-spacing="8" fill="#FBF5F3">OONCHAI</text>
+  <text x="400" y="1188" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="12"
+        letter-spacing="5" fill="#F3B8C6">TEAS FROM THE TOP · ZERO PLASTIC</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200">
+  <rect width="800" height="1200" fill="#2A2724"/>
+  <rect x="26" y="26" width="748" height="1148" fill="none" stroke="#C9A063" stroke-width="6"/>
+  <text x="400" y="100" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="14"
+        letter-spacing="6" fill="#F3B8C6">OONCHAI · ONE LEAF, MANY WORLDS · N° 07/08</text>
+  <text x="400" y="180" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="58"
+        fill="#FBF5F3" font-style="italic">Know Your Chai</text>
+  <line x1="270" y1="206" x2="530" y2="206" stroke="#F3B8C6" stroke-width="3"/>
+  
+  <circle cx="140" cy="300" r="34" fill="#E88DA6"/>
+  <circle cx="140" cy="300" r="34" fill="none" stroke="#FBF5F3" stroke-width="3"/>
+  <path d="M120 254 C114 240 124 234 120 222" stroke="#FBF5F3" stroke-width="3"
+        fill="none" stroke-linecap="round"/>
+  <text x="200" y="292" font-family="Georgia, 'Times New Roman', serif" font-size="27" fill="#FBF5F3" font-weight="bold">Rose Blush</text>
+  <text x="200" y="320" font-family="Verdana, Arial, sans-serif" font-size="15" fill="#A8CBB2">Calming, floral, caffeine-light</text>
+  <text x="200" y="344" font-family="Verdana, Arial, sans-serif" font-size="13" fill="#F3B8C6" letter-spacing="1">90°C · steep 4 min</text>
+  <line x1="110" y1="372" x2="690" y2="372" stroke="#FBF5F3" stroke-width="1" opacity="0.25"/>
+  <circle cx="140" cy="448" r="34" fill="#D9B44A"/>
+  <circle cx="140" cy="448" r="34" fill="none" stroke="#FBF5F3" stroke-width="3"/>
+  <path d="M120 402 C114 388 124 382 120 370" stroke="#FBF5F3" stroke-width="3"
+        fill="none" stroke-linecap="round"/>
+  <text x="200" y="440" font-family="Georgia, 'Times New Roman', serif" font-size="27" fill="#FBF5F3" font-weight="bold">Chamomile Calm</text>
+  <text x="200" y="468" font-family="Verdana, Arial, sans-serif" font-size="15" fill="#A8CBB2">Sleep-friendly, zero caffeine</text>
+  <text x="200" y="492" font-family="Verdana, Arial, sans-serif" font-size="13" fill="#F3B8C6" letter-spacing="1">95°C · steep 5 min</text>
+  <line x1="110" y1="520" x2="690" y2="520" stroke="#FBF5F3" stroke-width="1" opacity="0.25"/>
+  <circle cx="140" cy="596" r="34" fill="#3E7C59"/>
+  <circle cx="140" cy="596" r="34" fill="none" stroke="#FBF5F3" stroke-width="3"/>
+  <path d="M120 550 C114 536 124 530 120 518" stroke="#FBF5F3" stroke-width="3"
+        fill="none" stroke-linecap="round"/>
+  <text x="200" y="588" font-family="Georgia, 'Times New Roman', serif" font-size="27" fill="#FBF5F3" font-weight="bold">Matcha Whisk</text>
+  <text x="200" y="616" font-family="Verdana, Arial, sans-serif" font-size="15" fill="#A8CBB2">Whisked green energy, antioxidant-rich</text>
+  <text x="200" y="640" font-family="Verdana, Arial, sans-serif" font-size="13" fill="#F3B8C6" letter-spacing="1">80°C · whisk 30 sec</text>
+  <line x1="110" y1="668" x2="690" y2="668" stroke="#FBF5F3" stroke-width="1" opacity="0.25"/>
+  <circle cx="140" cy="744" r="34" fill="#5E82C4"/>
+  <circle cx="140" cy="744" r="34" fill="none" stroke="#FBF5F3" stroke-width="3"/>
+  <path d="M120 698 C114 684 124 678 120 666" stroke="#FBF5F3" stroke-width="3"
+        fill="none" stroke-linecap="round"/>
+  <text x="200" y="736" font-family="Georgia, 'Times New Roman', serif" font-size="27" fill="#FBF5F3" font-weight="bold">Blue Pea Cooler</text>
+  <text x="200" y="764" font-family="Verdana, Arial, sans-serif" font-size="15" fill="#A8CBB2">Butterfly-pea blue, earthy-cool</text>
+  <text x="200" y="788" font-family="Verdana, Arial, sans-serif" font-size="13" fill="#F3B8C6" letter-spacing="1">Cold brew · 10 min</text>
+  <line x1="110" y1="816" x2="690" y2="816" stroke="#FBF5F3" stroke-width="1" opacity="0.25"/>
+  <circle cx="140" cy="892" r="34" fill="#C9A063"/>
+  <circle cx="140" cy="892" r="34" fill="none" stroke="#FBF5F3" stroke-width="3"/>
+  <path d="M120 846 C114 832 124 826 120 814" stroke="#FBF5F3" stroke-width="3"
+        fill="none" stroke-linecap="round"/>
+  <text x="200" y="884" font-family="Georgia, 'Times New Roman', serif" font-size="27" fill="#FBF5F3" font-weight="bold">Kashmiri Kahwa</text>
+  <text x="200" y="912" font-family="Verdana, Arial, sans-serif" font-size="15" fill="#A8CBB2">Saffron, almond, green leaf warmth</text>
+  <text x="200" y="936" font-family="Verdana, Arial, sans-serif" font-size="13" fill="#F3B8C6" letter-spacing="1">85°C · steep 6 min</text>
+  <line x1="110" y1="964" x2="690" y2="964" stroke="#FBF5F3" stroke-width="1" opacity="0.25"/>
+  <text x="400" y="1010" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="15"
+        fill="#A8CBB2">every cup: free millet cookie (M &amp; L) · bring your flask −10%</text>
+  
+  <rect y="1040" width="800" height="160" fill="#1E4D3B"/>
+  <path d="M60 1040 L150 1096 L240 1040 Z" fill="#3E7C59" transform="translate(0,4)"/>
+  <path d="M0 1120 L120 1052 L240 1120 Z" fill="#3E7C59"/>
+  <path d="M160 1120 L300 1040 L440 1120 Z" fill="#A8CBB2" opacity="0.45"/>
+  <path d="M560 1120 L680 1052 L800 1120 Z" fill="#3E7C59"/>
+  <path d="M300 1040 L316 1050 L306 1052 L296 1046 Z" fill="#F3B8C6"/>
+  <text x="400" y="1162" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26"
+        letter-spacing="8" fill="#FBF5F3">OONCHAI</text>
+  <text x="400" y="1188" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="12"
+        letter-spacing="5" fill="#F3B8C6">TEAS FROM THE TOP · ZERO PLASTIC</text>
+</svg>

@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZEAL — The Five Doors · CaseQuest Team Console · Sankalan 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ECEEF1; --card:#FFFFFF; --ink:#161D29; --steel:#43526B; --muted:#6B7787;
+  --line:#C9D0DA; --line-soft:#DFE4EA;
+  --indigo:#23355C; --indigo-deep:#172441;
+  --flame:#E4572E; --flame-soft:#FBEAE3;
+  --brass:#8F6E14; --brass-soft:#F6EFD9;
+  --verd:#1F6F5C; --verd-soft:#E2F0EC;
+  --steelblue:#3D5A80; --steel-soft:#E5ECF4;
+  --danger:#B3261E;
+  --disp:'Bricolage Grotesque',Georgia,serif;
+  --body:'IBM Plex Sans',-apple-system,Segoe UI,Roboto,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --r:10px; --shadow:0 1px 2px rgba(22,29,41,.06),0 8px 24px rgba(22,29,41,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.55}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+button{font-family:var(--body);cursor:pointer}
+input,textarea,select{font-family:var(--body);font-size:14px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+input:focus,textarea:focus,select:focus,button:focus-visible{outline:2.5px solid var(--indigo);outline-offset:1px}
+textarea{resize:vertical;min-height:64px}
+.hidden{display:none!important}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-family:var(--disp);line-height:1.12}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 16px;font-weight:600;font-size:14px;color:var(--ink)}
+.btn:hover{border-color:var(--steel)}
+.btn-primary{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.btn-primary:hover{background:var(--indigo-deep)}
+.btn-flame{background:var(--flame);border-color:var(--flame);color:#fff}
+.btn-ghost{background:transparent}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11.5px;font-weight:500;border-radius:999px;padding:4px 11px;border:1px solid var(--line);background:#fff;white-space:nowrap}
+.role-cfo{color:var(--brass);background:var(--brass-soft);border-color:transparent}
+.role-cmo{color:var(--flame);background:var(--flame-soft);border-color:transparent}
+.role-coo{color:var(--steelblue);background:var(--steel-soft);border-color:transparent}
+.role-analyst{color:var(--verd);background:var(--verd-soft);border-color:transparent}
+
+/* ---------- SETUP ---------- */
+#setup{min-height:100vh;display:grid;grid-template-columns:minmax(380px,46%) 1fr}
+.setup-brand{background:var(--indigo-deep);color:#EDEFF5;padding:56px 52px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
+.setup-brand::after{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 88px);pointer-events:none}
+.stamp{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:#F0B9A6;border:1.5px solid #F0B9A6;border-radius:4px;padding:5px 12px;transform:rotate(-2deg);width:max-content}
+.setup-brand h1{font-size:clamp(40px,4.6vw,62px);font-weight:800;margin:18px 0 10px;color:#fff}
+.setup-brand .sub{font-size:16px;color:#B9C2D6;max-width:46ch}
+.mini-doors{display:flex;gap:10px;margin-top:34px}
+.mini-door{width:46px;height:84px;border:1.5px solid rgba(255,255,255,.35);border-radius:23px 23px 4px 4px;position:relative;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02))}
+.mini-door::after{content:"";position:absolute;right:7px;top:46%;width:5px;height:5px;border-radius:50%;background:#D9B45B}
+.setup-foot{font-family:var(--mono);font-size:11.5px;color:#8E9AB5;letter-spacing:.06em}
+.setup-form{padding:56px 60px;max-width:680px}
+.setup-form h2{font-size:26px;margin:6px 0 22px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--steel);margin-bottom:5px}
+.roles-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.role-card{border:1px solid var(--line);border-radius:var(--r);padding:14px;background:#fff}
+.role-card .rname{font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px;margin-bottom:3px}
+.role-card .rduty{font-size:12px;color:var(--muted);margin-bottom:9px;line-height:1.45}
+.resume-note{border:1px solid var(--verd);background:var(--verd-soft);border-radius:var(--r);padding:12px 14px;font-size:13.5px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+/* ---------- APP SHELL ---------- */
+#app{min-height:100vh;display:grid;grid-template-rows:60px 1fr;grid-template-columns:248px 1fr;grid-template-areas:"top top" "rail main"}
+.topbar{grid-area:top;background:var(--indigo-deep);color:#fff;display:flex;align-items:center;gap:14px;padding:0 18px;position:sticky;top:0;z-index:40}
+.topbar .logo{font-family:var(--disp);font-weight:800;font-size:17px;letter-spacing:.01em}
+.topbar .logo small{font-family:var(--mono);font-weight:500;font-size:10px;color:#9DA9C4;display:block;letter-spacing:.16em;margin-top:-2px}
+.top-chip{font-family:var(--mono);font-size:11.5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:5px 12px;color:#D8DEEC;white-space:nowrap}
+.top-chip b{color:#fff}
+#capitalChip.cut{background:rgba(228,87,46,.18);border-color:var(--flame);color:#FFD9CB}
+.spacer{flex:1}
+#clock{font-family:var(--mono);font-size:21px;font-weight:600;letter-spacing:.04em;background:#0E1729;border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:5px 14px}
+#clock.warn{color:#FFB59A;border-color:var(--flame)}
+#clock.crit{color:#fff;background:var(--flame);border-color:var(--flame)}
+#saveDot{font-family:var(--mono);font-size:10.5px;color:#9DA9C4}
+.rail{grid-area:rail;background:#fff;border-right:1px solid var(--line);padding:16px 12px;position:sticky;top:60px;height:calc(100vh - 60px);overflow:auto}
+.rail .eyebrow{padding:0 8px;margin-bottom:8px}
+.stage-btn{display:block;width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:9px;padding:10px 10px;margin-bottom:4px}
+.stage-btn:hover{background:var(--paper)}
+.stage-btn.active{background:var(--indigo);border-color:var(--indigo)}
+.stage-btn.active .st-name,.stage-btn.active .st-num{color:#fff}
+.stage-btn.active .st-meta{color:#AEB9D4}
+.st-top{display:flex;align-items:baseline;gap:8px}
+.st-num{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:600}
+.st-name{font-weight:700;font-size:14px}
+.st-meta{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4}
+.st-done{float:right;color:var(--verd);font-weight:700}
+#envelopeSlot{margin-top:14px;border-top:1px dashed var(--line);padding-top:14px}
+.envelope-btn{width:100%;border:1.5px solid var(--flame);background:var(--flame-soft);color:var(--flame);border-radius:9px;padding:10px;font-weight:700;font-size:13px;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(228,87,46,.35)}50%{box-shadow:0 0 0 7px rgba(228,87,46,0)}}
+.main{grid-area:main;padding:26px 30px 80px;max-width:1160px}
+.stage{display:none}
+.stage.visible{display:block;animation:fadein .25s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.stage-head{margin-bottom:18px}
+.stage-head h2{font-size:30px;font-weight:800;margin:4px 0 6px}
+.stage-head .lede{color:var(--steel);max-width:78ch;font-size:15px}
+.metric-tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--indigo);background:#E7EBF4;border-radius:5px;padding:4px 10px;margin-top:9px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;margin-bottom:18px}
+.panel h3{font-size:18px;font-weight:700;margin-bottom:4px}
+.panel .hint{font-size:12.5px;color:var(--muted);margin-bottom:13px}
+.duty-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px}
+table.dt{width:100%;border-collapse:collapse;font-size:13.5px}
+table.dt th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);border-bottom:1.5px solid var(--line);padding:7px 9px}
+table.dt td{border-bottom:1px solid var(--line-soft);padding:8px 9px;vertical-align:top}
+.count{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.count.bad{color:var(--danger);font-weight:600}
+.count.ok{color:var(--verd);font-weight:600}
+
+/* signals */
+.sig-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:10px}
+.sig{border:1.5px solid var(--line);border-radius:9px;background:#fff;padding:11px 12px;text-align:left;font-size:13px;line-height:1.45;color:var(--ink)}
+.sig:hover{border-color:var(--steel)}
+.sig.picked{border-color:var(--indigo);background:#EEF1F8}
+.sig .tag{font-family:var(--mono);font-size:10px;color:var(--muted);display:block;margin-bottom:4px}
+.sig.picked .tag{color:var(--indigo);font-weight:600}
+
+/* doors wall */
+.doors-wall{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+@media(max-width:1100px){.doors-wall{grid-template-columns:repeat(3,1fr)}}
+.door{border:none;background:transparent;text-align:center;padding:0}
+.door-frame{background:linear-gradient(180deg,var(--indigo) 0%,var(--indigo-deep) 100%);border-radius:60px 60px 8px 8px;padding:18px 13px 16px;min-height:218px;color:#fff;position:relative;border:1px solid #0E1729;transition:transform .18s ease,box-shadow .18s ease;display:flex;flex-direction:column;justify-content:flex-start;gap:7px}
+.door:hover .door-frame{transform:translateY(-4px);box-shadow:0 14px 28px rgba(22,29,41,.28)}
+.door-frame::after{content:"";position:absolute;right:13px;top:52%;width:9px;height:9px;border-radius:50%;background:#D9B45B;box-shadow:0 0 0 2.5px rgba(217,180,91,.3)}
+.door-frame .dnum{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:#9DA9C4}
+.door-frame .dname{font-family:var(--disp);font-weight:800;font-size:17px;line-height:1.18}
+.door-frame .dtag{font-size:11.5px;color:#B9C2D6;line-height:1.4}
+.door-frame .dcap{font-family:var(--mono);font-size:11px;color:#E8D9A8;margin-top:auto}
+.door.opened .door-frame{background:linear-gradient(180deg,#33486F,#23355C)}
+.door.opened .door-frame::before{content:"DOSSIER OPENED";position:absolute;left:50%;top:9px;transform:translateX(-50%);font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;color:#8FE3CB}
+.door-label{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:8px}
+
+/* dossier modal */
+.modal-back{position:fixed;inset:0;background:rgba(14,20,33,.55);z-index:60;display:flex;align-items:center;justify-content:center;padding:24px}
+.modal{background:#fff;border-radius:14px;max-width:880px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 24px 64px rgba(0,0,0,.35)}
+.modal-head{padding:22px 26px 14px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2;border-radius:14px 14px 0 0}
+.modal-head h3{font-size:23px;font-weight:800}
+.modal-head .stats{font-family:var(--mono);font-size:12px;color:var(--brass);margin-top:5px}
+.modal-body{padding:20px 26px 26px}
+.role-tabs{display:flex;gap:6px;margin:14px 0 14px;flex-wrap:wrap}
+.role-tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:600}
+.role-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pack li{margin:0 0 9px 18px;font-size:13.5px}
+.catch-box{border:1px solid var(--flame);background:var(--flame-soft);border-radius:9px;padding:12px 14px;font-size:13.5px;margin-top:14px}
+.catch-box b{color:var(--flame)}
+.modal-x{position:absolute;right:16px;top:16px;border:none;background:var(--paper);border-radius:8px;width:32px;height:32px;font-size:16px;font-weight:700}
+
+/* strategies */
+.strat-card{border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px;background:#FBFCFD;position:relative}
+.strat-card .shead{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.strat-card .sno{font-family:var(--mono);font-size:11px;background:var(--ink);color:#fff;border-radius:5px;padding:3px 8px}
+.strat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.door-checks{display:flex;gap:7px;flex-wrap:wrap}
+.dchk{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:7px;padding:5px 9px;font-size:12.5px;background:#fff;font-family:var(--mono)}
+.dchk input{width:auto}
+.del-btn{position:absolute;right:12px;top:12px;border:none;background:transparent;color:var(--muted);font-size:13px;font-weight:600}
+.del-btn:hover{color:var(--danger)}
+
+/* factors */
+.lib-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.lib-chip{border:1px dashed var(--line);background:#fff;border-radius:999px;padding:5px 12px;font-size:12px;color:var(--steel)}
+.lib-chip:hover{border-color:var(--indigo);color:var(--indigo)}
+.lib-chip.used{opacity:.35;pointer-events:none}
+.factor-row select,.factor-row input{font-size:12.5px;padding:5px 7px}
+.quad-wrap{display:grid;grid-template-columns:1fr 380px;gap:18px}
+@media(max-width:1000px){.quad-wrap{grid-template-columns:1fr}}
+.quad-legend{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.6}
+
+/* weights */
+.wsum{height:9px;background:var(--line-soft);border-radius:999px;overflow:hidden;margin:7px 0 2px}
+.wsum i{display:block;height:100%;background:var(--brass);border-radius:999px;transition:width .2s}
+.wsum.over i{background:var(--danger)}
+.wsum.exact i{background:var(--verd)}
+.matrix td input{width:62px;text-align:center}
+.totbar{display:flex;align-items:center;gap:10px;margin:7px 0}
+.totbar .lbl{width:200px;font-size:13px;font-weight:600;text-align:right}
+.totbar .bar{flex:1;height:22px;background:var(--line-soft);border-radius:6px;overflow:hidden}
+.totbar .bar i{display:block;height:100%;background:var(--indigo);border-radius:6px;transition:width .25s}
+.totbar.win .bar i{background:var(--verd)}
+.totbar .val{font-family:var(--mono);font-size:13px;width:58px;font-weight:600}
+
+/* stage 5 */
+.alloc-row{display:grid;grid-template-columns:200px 110px 1fr;gap:12px;align-items:center;margin-bottom:9px}
+.alloc-row .nm{font-size:13.5px;font-weight:600}
+.alloc-row .nm small{display:block;font-weight:400;color:var(--muted);font-size:11px}
+.gauge{height:26px;border:1.5px solid var(--ink);border-radius:8px;overflow:hidden;background:#fff;position:relative}
+.gauge i{display:block;height:100%;background:linear-gradient(90deg,var(--verd),#7AB99F);transition:width .25s}
+.gauge.over i{background:linear-gradient(90deg,var(--flame),#C23A12)}
+.gauge .glabel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:600}
+.twist-banner{border:2px solid var(--flame);border-radius:var(--r);background:var(--flame-soft);padding:18px;margin-bottom:18px}
+.twist-banner h3{color:var(--flame);font-size:19px}
+.check-list{list-style:none}
+.check-list li{padding:5px 0;font-size:13.5px;display:flex;gap:9px;align-items:baseline}
+.check-list .tick{font-family:var(--mono);font-weight:700;width:18px}
+.check-list li.ok .tick{color:var(--verd)}
+.check-list li.no .tick{color:var(--danger)}
+.lockbar{position:sticky;bottom:0;background:#fff;border-top:1.5px solid var(--line);margin:0 -30px;padding:13px 30px;display:flex;gap:10px;align-items:center;z-index:30}
+.locked-banner{background:var(--verd);color:#fff;border-radius:var(--r);padding:14px 18px;font-weight:600;margin-bottom:18px}
+
+/* twist modal */
+.twist-modal .modal-head{background:var(--flame);color:#fff;border-radius:14px 14px 0 0}
+.twist-modal .modal-head h3{color:#fff}
+.red-env{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:#FFD9CB}
+
+/* briefing */
+.brief-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:1000px){.brief-grid{grid-template-columns:1fr}}
+.persona{display:flex;gap:11px;margin-bottom:11px}
+.persona .av{width:38px;height:38px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;flex-shrink:0}
+.persona b{font-size:13.5px}
+.persona p{font-size:12.5px;color:var(--steel)}
+blockquote.mandate{border-left:3px solid var(--brass);padding:4px 0 4px 16px;font-family:var(--disp);font-size:17px;font-weight:600;color:var(--indigo-deep);margin:12px 0}
+
+/* MEMO / PRINT */
+#memoOverlay{position:fixed;inset:0;background:rgba(14,20,33,.6);z-index:80;overflow:auto;padding:30px}
+#memoSheet{background:#fff;max-width:840px;margin:0 auto;border-radius:6px;padding:46px 52px;box-shadow:0 24px 80px rgba(0,0,0,.45)}
+.memo-actions{max-width:840px;margin:0 auto 12px;display:flex;gap:10px;justify-content:flex-end}
+#memoSheet h1{font-size:27px;margin-bottom:2px}
+#memoSheet .mhead{border-bottom:2.5px solid var(--ink);padding-bottom:14px;margin-bottom:18px}
+#memoSheet h2{font-size:17px;border-bottom:1.5px solid var(--line);padding-bottom:5px;margin:24px 0 10px;font-weight:800}
+#memoSheet h2 .mscore{float:right;font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:500}
+#memoSheet p,#memoSheet li,#memoSheet td{font-size:12.8px}
+#memoSheet table.dt td,#memoSheet table.dt th{padding:5px 7px}
+.memo-kv{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:6px}
+.owner-tag{font-family:var(--mono);font-size:10px;color:var(--muted)}
+@media print{
+  body *{visibility:hidden}
+  #memoOverlay{position:static;padding:0;background:#fff;overflow:visible}
+  #memoOverlay,#memoSheet,#memoSheet *{visibility:visible}
+  #memoSheet{box-shadow:none;border-radius:0;max-width:none;padding:0}
+  .memo-actions{display:none}
+  #memoSheet h2{page-break-after:avoid}
+  .pb{page-break-before:always}
+}
+@media(max-width:880px){
+  #setup{grid-template-columns:1fr}
+  #app{grid-template-columns:1fr;grid-template-areas:"top" "main"}
+  .rail{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= SETUP ================= -->
+<div id="setup">
+  <div class="setup-brand">
+    <div>
+      <span class="stamp">CONFIDENTIAL · BOARD PAPERS</span>
+      <h1>ZEAL<br>The Five Doors</h1>
+      <p class="sub">A ₹500 Cr decision war-game. One conglomerate, five market opportunities, 72 hours to the board meeting — compressed into 180 minutes.</p>
+      <div class="mini-doors"><div class="mini-door"></div><div class="mini-door"></div><div class="mini-door"></div><div class="mini-door"></div><div class="mini-door"></div></div>
+    </div>
+    <p class="setup-foot">CASEQUEST · SANKALAN 2026 · MDI GURGAON — TEAM CONSOLE v1.0</p>
+  </div>
+  <div class="setup-form">
+    <span class="eyebrow">Console setup</span>
+    <h2>Register your team</h2>
+    <div id="resumeNote" class="resume-note hidden">
+      <span>A saved session was found on this laptop. Resume it, or start fresh.</span>
+      <span style="display:flex;gap:8px"><button class="btn btn-primary" id="resumeBtn">Resume</button><button class="btn" id="freshBtn">Start fresh</button></span>
+    </div>
+    <div class="field" style="display:grid;grid-template-columns:140px 1fr;gap:14px">
+      <div><label for="teamNo">Team number</label>
+        <select id="teamNo"></select></div>
+      <div><label for="teamName">Team name</label>
+        <input id="teamName" placeholder="e.g., Vector Five" maxlength="40"></div>
+    </div>
+    <p class="eyebrow" style="margin:18px 0 10px">Assign the four chairs — every chair owns artifacts the judges will probe</p>
+    <div class="roles-grid">
+      <div class="role-card"><div class="rname"><span class="chip role-cfo">CFO</span> Finance chair</div><div class="rduty">Owns capital allocation, payback logic, the twist re-budget, and the decision-matrix maths.</div><input id="mCfo" placeholder="Member name" maxlength="30"></div>
+      <div class="role-card"><div class="rname"><span class="chip role-cmo">CMO</span> Marketing chair</div><div class="rduty">Owns brand stretch, consumer logic, channel pull vs push, and the rejected-doors defence.</div><input id="mCmo" placeholder="Member name" maxlength="30"></div>
+      <div class="role-card"><div class="rname"><span class="chip role-coo">COO</span> Operations chair</div><div class="rduty">Owns factory assignment, distribution load, hiring plan, and the 36-month roadmap.</div><input id="mCoo" placeholder="Member name" maxlength="30"></div>
+      <div class="role-card"><div class="rname"><span class="chip role-analyst">CA</span> Chief Analyst</div><div class="rduty">Owns the signal sort, factor map, data conflicts, sensitivity test, and risk register.</div><input id="mAnalyst" placeholder="Member name" maxlength="30"></div>
+    </div>
+    <p style="font-size:12.5px;color:var(--muted);margin:14px 0 18px">The clock starts the moment you enter the boardroom: <b>180 minutes</b>, hard stop. Work is auto-saved on this laptop. Expect the unexpected.</p>
+    <button class="btn btn-primary" id="startBtn" style="font-size:16px;padding:13px 28px">Enter the boardroom →</button>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app" class="hidden">
+  <header class="topbar">
+    <div class="logo">ZEAL · The Five Doors<small>CASEQUEST — SANKALAN 2026</small></div>
+    <span class="top-chip" id="teamChip"></span>
+    <span class="top-chip" id="capitalChip">CAPITAL <b>₹500 Cr</b></span>
+    <span class="spacer"></span>
+    <span id="saveDot">saved</span>
+    <div id="clock">3:00:00</div>
+    <button class="btn btn-flame" id="exportBtn" title="Compile the Board Memo">Board Memo</button>
+  </header>
+
+  <nav class="rail">
+    <p class="eyebrow">Board agenda</p>
+    <div id="stageNav"></div>
+    <div id="envelopeSlot" class="hidden">
+      <button class="envelope-btn" id="envelopeBtn">✉ THE RED ENVELOPE</button>
+    </div>
+  </nav>
+
+  <main class="main">
+
+  <!-- ======== STAGE 0 : BRIEF ======== -->
+  <section class="stage" id="st0">
+    <div class="stage-head">
+      <span class="eyebrow">Agenda 00 · suggested 20 min · all four chairs read together</span>
+      <h2>The Briefing</h2>
+      <p class="lede">Read the room before you speak in it. Everything the board will hold you to is on this page.</p>
+    </div>
+
+    <div class="panel">
+      <h3>The Setup</h3>
+      <p style="font-size:14px;max-width:88ch">Zeal Consumer Ventures is a three-year-old internal venture unit of <b>Bharat Industrial Group</b> — a ₹9,000 Cr conglomerate built on cement, steel tubes and agri-inputs. Three years ago the board made a bet: <i>we are too dependent on cyclical B2B businesses; build us a consumer engine.</i> Zeal's research phase is complete. Five market opportunities are on the table. The board meets in 72 hours.</p>
+      <blockquote class="mandate">"Convert what we already own — reach, raw material, capacity, and trust in Tier 2/3 India — into a consumer business. ₹500 Cr. 36 months. One shot."</blockquote>
+      <p style="font-size:13px;color:var(--steel)">Your team <b>is</b> Zeal's leadership. Your output is a Board Memo the Chairman can act on. Every recommendation must survive his three questions: <b>Why this? Why now? Why us?</b></p>
+    </div>
+
+    <div class="brief-grid">
+      <div class="panel">
+        <h3>The room you must convince</h3>
+        <p class="hint">Write for these four readers — the judges will channel them.</p>
+        <div class="persona"><div class="av">RB</div><div><b>Raghav Bharatia — Chairman</b><p>Third-generation. Patient capital, impatient with vagueness. Asks the three questions, in order, every time.</p></div></div>
+        <div class="persona"><div class="av">DS</div><div><b>Devendra Sahay — Group CFO</b><p>Capital hawk. Hurdle rate 14%. Wants payback visibility inside 48 months and a reserve for shocks.</p></div></div>
+        <div class="persona"><div class="av">MK</div><div><b>Meera Krishnan — CEO, Zeal</b><p>Ex-FMCG. Knows the team's ops strength and marketing gap better than anyone. Will not oversell.</p></div></div>
+        <div class="persona"><div class="av">AR</div><div><b>Prof. Anjali Rao — Independent Director</b><p>Consumer-behaviour academic. Probes brand-stretch logic and anything that smells like wishful demand.</p></div></div>
+      </div>
+      <div class="panel">
+        <h3>How you will be judged — 100 points</h3>
+        <p class="hint">Five metrics, 20 points each. Each agenda item builds the artifact for one metric.</p>
+        <table class="dt">
+          <tr><th>#</th><th>Metric</th><th>Built in</th></tr>
+          <tr><td class="mono">M1</td><td>Understanding of the problem</td><td>01 · Frame</td></tr>
+          <tr><td class="mono">M2</td><td>Multiple solutions provided</td><td>02 · Explore</td></tr>
+          <tr><td class="mono">M3</td><td>Factors that influence the solution</td><td>03 · Forces</td></tr>
+          <tr><td class="mono">M4</td><td>Weightage to the solution</td><td>04 · Weigh</td></tr>
+          <tr><td class="mono">M5</td><td>Final solution provided</td><td>05 · Decide</td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px">Judges may ask <b>any member</b> to defend the artifact their chair owns. Division of labour is part of the test.</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>The Resource Pool — fixed, combinable, never expandable</h3>
+      <table class="dt">
+        <tr><th>Resource</th><th>What it is</th><th>The fine print</th></tr>
+        <tr><td><b>Capital</b></td><td>₹500 Cr over 36 months</td><td>Cannot be raised externally. Group hurdle rate 14%; CFO expects payback visibility ≤ 48 months on any door opened.</td></tr>
+        <tr><td><b>Distribution</b></td><td>14,000 retailer touchpoints · 180 Tier 2/3 towns (agri-input network)</td><td>Each touchpoint carries max 2 new lines without degrading agri service. Repurposing &gt;30% of network capacity risks est. ₹35 Cr/yr of agri revenue.</td></tr>
+        <tr><td><b>Factories</b></td><td>Rajasthan — dry/powder formats. Maharashtra — liquid/wet formats. Both idle.</td><td>Combined capacity = one large line or two small lines, never three. Retooling: ₹25–60 Cr and 6–9 months per plant, by category.</td></tr>
+        <tr><td><b>Raw materials</b></td><td>Long-term contracts: cement additives, steel coatings, agri-chemicals (₹120 Cr/yr locked volumes)</td><td>8–11% input-cost advantage on construction-adjacent products. Little transferability to food or personal care.</td></tr>
+        <tr><td><b>Brand trust</b></td><td>"Bharat" — 71% aided recall in Tier 2/3</td><td>Attribute scores /100: reliability 84 · value 79 · durability 81 · modern 22 · personal 9. Untested in food and personal care.</td></tr>
+        <tr><td><b>Talent</b></td><td>40 people — strong ops &amp; distribution, zero consumer marketing</td><td>Maximum 15 new hires. A senior consumer-marketing hire costs ₹1.2–1.8 Cr/yr and 6 months to land.</td></tr>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h3>House rules</h3>
+      <ul style="margin-left:18px;font-size:13.5px">
+        <li>Five doors. Open any combination — but every rupee, plant, touchpoint and hire must come from the pool above.</li>
+        <li>You must defend the doors you <b>did not</b> open as firmly as the ones you did.</li>
+        <li>The console auto-saves locally. At 3:00:00 the console locks and your Board Memo is what the judges score.</li>
+        <li>Stay alert. Boards have a habit of changing the terms mid-meeting.</li>
+      </ul>
+      <div style="margin-top:14px"><button class="btn btn-primary" onclick="gotoStage(1)">Begin Agenda 01 — Frame →</button></div>
+    </div>
+  </section>
+
+  <!-- ======== STAGE 1 : FRAME ======== -->
+  <section class="stage" id="st1">
+    <div class="stage-head">
+      <span class="eyebrow">Agenda 01 · suggested 25 min</span>
+      <h2>Frame the Problem</h2>
+      <p class="lede">Most teams lose here, politely. Prove you know what actually binds this decision — before you touch a single door.</p>
+      <span class="metric-tag">SCORED → M1 · UNDERSTANDING OF THE PROBLEM · 20 PTS</span>
+    </div>
+
+    <div class="panel">
+      <h3>1.1 — Signal Sort <span class="chip role-analyst" style="margin-left:8px">Chief Analyst leads</span></h3>
+      <p class="hint">Twelve statements from the case file. Exactly <b>six</b> are decision-critical constraints; six are noise. Select the six signals. Your picks print in the memo — judges hold the key.</p>
+      <div class="sig-grid" id="sigGrid"></div>
+      <p class="count" id="sigCount" style="margin-top:10px">0 of 6 selected</p>
+    </div>
+
+    <div class="panel">
+      <h3>1.2 — The Problem, in one breath</h3>
+      <p class="hint">State the problem in ≤ 40 words. Not the situation — the <i>problem</i>. Then name the core tension your recommendation must resolve.</p>
+      <textarea id="probStmt" maxlength="320" placeholder="The real decision Zeal faces is…"></textarea>
+      <p class="count" id="probCount">0 / 40 words</p>
+      <div style="display:grid;grid-template-columns:1fr 60px 1fr;gap:8px;align-items:center;margin-top:10px">
+        <input id="tensionA" placeholder="e.g., Leverage what Bharat is" maxlength="60">
+        <div style="text-align:center;font-family:var(--mono);font-weight:700;color:var(--flame)">VS</div>
+        <input id="tensionB" placeholder="e.g., Become what it is not" maxlength="60">
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>1.3 — Four chairs, four lenses</h3>
+      <p class="hint">Each chair files one reading. One or two sharp sentences each — these are owner-tagged in the memo.</p>
+      <div class="strat-grid">
+        <div><label class="chip role-cfo" style="margin-bottom:6px">CFO</label><textarea id="lensCfo" placeholder="Beyond the ₹500 Cr ceiling, what most binds how capital can be deployed?"></textarea></div>
+        <div><label class="chip role-cmo" style="margin-bottom:6px">CMO</label><textarea id="lensCmo" placeholder="What can the Bharat brand credibly carry into consumer markets — and where does it break?"></textarea></div>
+        <div><label class="chip role-coo" style="margin-bottom:6px">COO</label><textarea id="lensCoo" placeholder="Which operational asset becomes scarcest once shared across doors — and why?"></textarea></div>
+        <div><label class="chip role-analyst" style="margin-bottom:6px">Chief Analyst</label><textarea id="lensAnalyst" placeholder="The single most decision-relevant data gap — and how you'd close it inside 72 hours."></textarea></div>
+      </div>
+      <div style="margin-top:14px"><button class="btn btn-primary" onclick="gotoStage(2)">To Agenda 02 — Explore the doors →</button></div>
+    </div>
+  </section>
+
+  <!-- ======== STAGE 2 : EXPLORE ======== -->
+  <section class="stage" id="st2">
+    <div class="stage-head">
+      <span class="eyebrow">Agenda 02 · suggested 40 min</span>
+      <h2>Explore the Five Doors</h2>
+      <p class="lede">Each door opens onto a dossier with four intel packs — one per chair. Split up, read your pack, report back. Then build at least two genuinely different strategies.</p>
+      <span class="metric-tag">SCORED → M2 · MULTIPLE SOLUTIONS PROVIDED · 20 PTS</span>
+    </div>
+
+    <div class="panel">
+      <h3>The Wall</h3>
+      <p class="hint">Click a door to open its dossier. Doors remember being opened. The fine print hides interdependencies — two doors can want the same factory.</p>
+      <div class="doors-wall" id="doorsWall"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Solution Studio</h3>
+      <p class="hint">A strategy = doors chosen + sequence + indicative capital split + a thesis in ≤ 30 words + the risk that kills it. Minimum 2, maximum 4. Make them <b>different bets</b>, not volume knobs on the same bet.</p>
+      <div id="stratList"></div>
+      <button class="btn" id="addStrat">+ Add a strategy</button>
+      <p class="count" id="stratCount" style="margin-top:8px"></p>
+      <div style="margin-top:14px"><button class="btn btn-primary" onclick="gotoStage(3)">To Agenda 03 — Map the forces →</button></div>
+    </div>
+  </section>
+  <!-- ======== STAGE 3 : FORCES ======== -->
+  <section class="stage" id="st3">
+    <div class="stage-head">
+      <span class="eyebrow">Agenda 03 · suggested 30 min</span>
+      <h2>Map the Forces</h2>
+      <p class="lede">Decisions are made inside a force field. Name the factors that bend this one — internal and external — rate each on impact and uncertainty, and give every factor an owner.</p>
+      <span class="metric-tag">SCORED → M3 · FACTORS THAT INFLUENCE THE SOLUTION · 20 PTS</span>
+    </div>
+
+    <div class="panel">
+      <h3>Factor Builder <span class="chip role-analyst" style="margin-left:8px">Chief Analyst leads · every chair contributes</span></h3>
+      <p class="hint">Pull factors from the library or add your own (custom factors impress judges when they're material). Minimum 8. Rate Impact and Uncertainty 1–5; assign the chair who will watch it.</p>
+      <p class="eyebrow" style="margin-bottom:7px">Factor library — click to add</p>
+      <div class="lib-chips" id="libChips"></div>
+      <div style="display:flex;gap:9px;margin-bottom:14px">
+        <input id="customFactor" placeholder="Add a custom factor…" maxlength="70" style="max-width:380px">
+        <button class="btn" id="addFactorBtn">Add</button>
+      </div>
+      <div class="quad-wrap">
+        <div>
+          <table class="dt" id="factorTable">
+            <thead><tr><th>#</th><th>Factor</th><th>Type</th><th>Impact</th><th>Uncert.</th><th>Owner</th><th></th></tr></thead>
+            <tbody id="factorBody"></tbody>
+          </table>
+          <p class="count" id="factorCount" style="margin-top:8px"></p>
+        </div>
+        <div>
+          <p class="eyebrow" style="margin-bottom:6px">Live force map</p>
+          <svg id="quad" viewBox="0 0 380 320" style="width:100%;background:#FBFCFD;border:1px solid var(--line);border-radius:10px"></svg>
+          <p class="quad-legend"><b>Top-left</b> act on it (high impact, low uncertainty) · <b>Top-right</b> hedge it (high impact, high uncertainty) · <b>Bottom-left</b> park it · <b>Bottom-right</b> watch it</p>
+        </div>
+      </div>
+      <div style="margin-top:14px"><button class="btn btn-primary" onclick="gotoStage(4)">To Agenda 04 — Weigh the options →</button></div>
+    </div>
+  </section>
+
+  <!-- ======== STAGE 4 : WEIGH ======== -->
+  <section class="stage" id="st4">
+    <div class="stage-head">
+      <span class="eyebrow">Agenda 04 · suggested 25 min</span>
+      <h2>Weigh the Options</h2>
+      <p class="lede">Opinions are free; weights are commitments. Choose 5–7 criteria, distribute exactly 100 points of weight, score every strategy — and see if your favourite survives the maths.</p>
+      <span class="metric-tag">SCORED → M4 · WEIGHTAGE TO THE SOLUTION · 20 PTS</span>
+    </div>
+
+    <div class="panel">
+      <h3>4.1 — Criteria &amp; weights <span class="chip role-cfo" style="margin-left:8px">CFO leads</span></h3>
+      <p class="hint">Pick from the library or write your own. Weights must total exactly 100. A weight is a claim about what the board should care about most — be ready to defend the ordering.</p>
+      <div class="lib-chips" id="critChips"></div>
+      <div style="display:flex;gap:9px;margin-bottom:10px">
+        <input id="customCrit" placeholder="Add a custom criterion…" maxlength="50" style="max-width:380px">
+        <button class="btn" id="addCritBtn">Add</button>
+      </div>
+      <table class="dt" style="max-width:560px"><tbody id="critBody"></tbody></table>
+      <div style="max-width:560px"><div class="wsum" id="wsumBar"><i style="width:0%"></i></div>
+      <p class="count" id="wsumLbl">Total weight: 0 / 100</p></div>
+    </div>
+
+    <div class="panel">
+      <h3>4.2 — Decision matrix</h3>
+      <p class="hint">Score each strategy 1–10 on every criterion. Weighted totals compute live. Then run the stress test — if a ±10 shift in your top weight flips the winner, the board will find that out before you do.</p>
+      <div style="overflow:auto"><table class="dt matrix" id="matrixTable"></table></div>
+      <div id="totals" style="margin-top:16px"></div>
+      <button class="btn" id="sensBtn" style="margin-top:8px">⚖ Stress-test the top weight (±10)</button>
+      <div id="sensOut" style="margin-top:10px;font-size:13px"></div>
+      <div style="margin-top:14px"><button class="btn btn-primary" onclick="gotoStage(5)">To Agenda 05 — Decide →</button></div>
+    </div>
+  </section>
+
+  <!-- ======== STAGE 5 : DECIDE ======== -->
+  <section class="stage" id="st5">
+    <div class="stage-head">
+      <span class="eyebrow">Agenda 05 · suggested 40 min · all chairs</span>
+      <h2>Decide &amp; File the Board Memo</h2>
+      <p class="lede">One recommendation. Closed maths. Named milestones, kill criteria, and a straight answer to the Chairman's three questions.</p>
+      <span class="metric-tag">SCORED → M5 · FINAL SOLUTION PROVIDED · 20 PTS</span>
+    </div>
+
+    <div id="twistInline" class="twist-banner hidden">
+      <h3>✉ THE RED ENVELOPE IS IN PLAY</h3>
+      <p style="font-size:13.5px;margin:7px 0">Deployable capital is now <b>₹420 Cr</b>, and Saanjh Naturals is on the table at ₹85 Cr. File your response below — the memo prints it.</p>
+      <textarea id="twistResp" maxlength="640" placeholder="What changes, what survives, and why (≤ 80 words). If you engage with Saanjh, say on what terms; if you don't, say why not."></textarea>
+      <p class="count" id="twistCount">0 / 80 words</p>
+    </div>
+
+    <div class="panel">
+      <h3>5.1 — The recommendation</h3>
+      <p class="hint">Pick the strategy you are taking to the board, then close the resource maths around it.</p>
+      <select id="chosenStrat" style="max-width:480px"></select>
+    </div>
+
+    <div class="panel">
+      <h3>5.2 — Capital allocation <span class="chip role-cfo" style="margin-left:8px">CFO files</span></h3>
+      <p class="hint">₹ Cr over 36 months, per door, plus a reserve. The gauge must not run hot — the board funds plans, not hopes.</p>
+      <div id="allocRows"></div>
+      <div class="gauge" id="capGauge"><i style="width:0%"></i><span class="glabel" id="capLabel"></span></div>
+    </div>
+
+    <div class="panel">
+      <h3>5.3 — Plant, network &amp; people <span class="chip role-coo" style="margin-left:8px">COO files</span></h3>
+      <div class="strat-grid">
+        <div>
+          <label style="font-size:12.5px;font-weight:600;color:var(--steel)">Rajasthan plant (dry / powder)</label>
+          <select id="facRaj"></select>
+          <label style="font-size:12.5px;font-weight:600;color:var(--steel);margin-top:10px;display:block">Maharashtra plant (liquid / wet)</label>
+          <select id="facMah"></select>
+          <p class="count" id="facNote" style="margin-top:7px"></p>
+        </div>
+        <div>
+          <label style="font-size:12.5px;font-weight:600;color:var(--steel)">Distribution network repurposed: <span class="mono" id="distVal">20%</span></label>
+          <input type="range" id="distSlider" min="0" max="100" step="5" value="20" style="padding:0">
+          <p class="count" id="distNote"></p>
+          <label style="font-size:12.5px;font-weight:600;color:var(--steel);margin-top:10px;display:block">Hiring plan — max 15 across functions</label>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:6px" id="hireGrid"></div>
+          <p class="count" id="hireNote"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>5.4 — 36-month roadmap &amp; kill criteria <span class="chip role-coo" style="margin-left:8px">COO files</span> <span class="chip role-analyst">Analyst sets kill criteria</span></h3>
+      <p class="hint">Three phases. For each: what you do, and the measurable criterion that tells the board to continue — or to stop.</p>
+      <table class="dt"><thead><tr><th style="width:110px">Phase</th><th>Focus &amp; milestones</th><th>Go / kill criterion</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">P1 · 0–9 m</td><td><textarea id="ph1" style="min-height:52px"></textarea></td><td><textarea id="k1" style="min-height:52px" placeholder="e.g., ≥X% trade listing in 60 pilot towns, else halt"></textarea></td></tr>
+        <tr><td class="mono">P2 · 9–21 m</td><td><textarea id="ph2" style="min-height:52px"></textarea></td><td><textarea id="k2" style="min-height:52px"></textarea></td></tr>
+        <tr><td class="mono">P3 · 21–36 m</td><td><textarea id="ph3" style="min-height:52px"></textarea></td><td><textarea id="k3" style="min-height:52px"></textarea></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="panel">
+      <h3>5.5 — The doors you did not open <span class="chip role-cmo" style="margin-left:8px">CMO files</span></h3>
+      <p class="hint">One firm line each. "Not now" is a position; "maybe later" is not.</p>
+      <div id="rejectedList"></div>
+    </div>
+
+    <div class="panel">
+      <h3>5.6 — Risk register <span class="chip role-analyst" style="margin-left:8px">Chief Analyst files</span></h3>
+      <table class="dt"><thead><tr><th style="width:30px">#</th><th>Top risk</th><th>Mitigation / trigger</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">R1</td><td><input id="r1" maxlength="120"></td><td><input id="m1" maxlength="120"></td></tr>
+        <tr><td class="mono">R2</td><td><input id="r2" maxlength="120"></td><td><input id="m2" maxlength="120"></td></tr>
+        <tr><td class="mono">R3</td><td><input id="r3" maxlength="120"></td><td><input id="m3" maxlength="120"></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="panel">
+      <h3>5.7 — The Chairman's three questions</h3>
+      <div class="strat-grid" style="grid-template-columns:1fr 1fr 1fr">
+        <div><label style="font-size:12.5px;font-weight:700">Why this?</label><textarea id="qThis"></textarea></div>
+        <div><label style="font-size:12.5px;font-weight:700">Why now?</label><textarea id="qNow"></textarea></div>
+        <div><label style="font-size:12.5px;font-weight:700">Why us?</label><textarea id="qUs"></textarea></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Pre-flight checks</h3>
+      <ul class="check-list" id="checks"></ul>
+    </div>
+
+    <div class="lockbar">
+      <button class="btn btn-flame" id="lockBtn">🔒 Lock &amp; compile Board Memo</button>
+      <button class="btn" id="jsonBtn">Download backup (.json)</button>
+      <span class="count" id="lockHint"></span>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<!-- door dossier modal -->
+<div class="modal-back hidden" id="doorBack">
+  <div class="modal" style="position:relative">
+    <button class="modal-x" id="doorX">✕</button>
+    <div class="modal-head"><span class="eyebrow" id="ddNum"></span><h3 id="ddTitle"></h3><div class="stats" id="ddStats"></div></div>
+    <div class="modal-body">
+      <p id="ddSummary" style="font-size:14px"></p>
+      <div class="role-tabs" id="ddTabs"></div>
+      <ul class="pack" id="ddPack"></ul>
+      <div class="catch-box" id="ddCatch"></div>
+    </div>
+  </div>
+</div>
+
+<!-- twist modal -->
+<div class="modal-back hidden" id="twistBack">
+  <div class="modal twist-modal" style="max-width:680px;position:relative">
+    <div class="modal-head"><span class="red-env">URGENT · CHAIRMAN'S OFFICE · T-MINUS 24 HOURS</span><h3>✉ The Red Envelope</h3></div>
+    <div class="modal-body">
+      <p style="font-size:14px;margin-bottom:12px">A runner just handed each team the same sealed note. The board meeting has moved up — and two things changed overnight:</p>
+      <table class="dt">
+        <tr><td class="mono" style="width:30px;color:var(--flame);font-weight:700">1</td><td><b>Capital cut.</b> A downturn in the steel division means deployable capital falls from ₹500 Cr to <b>₹420 Cr</b>. No exceptions, no appeals.</td></tr>
+        <tr><td class="mono" style="color:var(--flame);font-weight:700">2</td><td><b>An inbound offer.</b> <b>Saanjh Naturals</b> — a Tier-2-born D2C personal care brand (₹62 Cr revenue, 41% gross margin, 38% repeat rate, founder committed for 3 years) — is available to acquire for <b>₹85 Cr</b>. The window closes with this board cycle.</td></tr>
+      </table>
+      <p style="font-size:13px;margin-top:12px;color:var(--steel)">Your capital gauge has been re-set. File a twist response in Agenda 05 — what changes, what survives, and why. Plans that merely shrink are noticed; plans that <i>adapt</i> are funded.</p>
+      <div style="margin-top:14px;text-align:right"><button class="btn btn-flame" id="twistAck">Understood — back to work</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- memo overlay -->
+<div id="memoOverlay" class="hidden">
+  <div class="memo-actions">
+    <button class="btn btn-primary" onclick="window.print()">🖨 Print / Save as PDF</button>
+    <button class="btn" id="memoClose" style="background:#fff">Close</button>
+  </div>
+  <div id="memoSheet"></div>
+</div>
+
+<script>
+/* ============ DATA ============ */
+const ROLES = {cfo:'CFO', cmo:'CMO', coo:'COO', analyst:'Chief Analyst'};
+const ROLE_CLASS = {cfo:'role-cfo', cmo:'role-cmo', coo:'role-coo', analyst:'role-analyst'};
+
+const SIGNALS = [
+  {t:'The ₹500 Cr cannot be augmented externally — capital is a hard ceiling, not a target.', key:true},
+  {t:"Bharat Industrial Group's cement business grew 7% last year.", key:false},
+  {t:'Factory capacity supports one large product line or two small ones — never three.', key:true},
+  {t:'The Zeal team sits in a renovated office complex in Pune.', key:false},
+  {t:'The Bharat brand scores 84/79/81 on reliability/value/durability — and 22 on "modern", 9 on "personal".', key:true},
+  {t:'The conglomerate is forty-seven years old.', key:false},
+  {t:'Repurposing the distribution network degrades service to the agri-inputs business that feeds it.', key:true},
+  {t:"Asian Paints' stock price rose 12% this quarter.", key:false},
+  {t:'The 40-person team is strong in ops and distribution, has zero consumer-marketing experience — and only 15 hires are allowed.', key:true},
+  {t:'A rival conglomerate recently launched a luxury watch brand in the metros.', key:false},
+  {t:'The board expects one recommendation, in 72 hours, with one shot — sequencing and reversibility matter.', key:true},
+  {t:"Zeal's CEO previously worked at an FMCG multinational.", key:false}
+];
+
+const DOORS = [
+ {id:'d1', name:'The Utility Play', tag:'Waterproofing & construction chemicals for self-build homeowners',
+  stats:'Market ₹38,000 Cr · +11%/yr · GM 12–15% · Capital ₹180–220 Cr',
+  cap:'₹180–220 Cr',
+  summary:'Tier 2/3 homeowners building their own houses buy waterproofing, tile adhesive and wall putty — mostly from unbranded local suppliers. No trusted national consumer brand exists below ₹2,000 Cr revenue in this space.',
+  packs:{
+   cfo:['Gross margin 12–15%; the profit pool sits in volume and trade terms, not price.','Payback modelled at 30–36 months if Zeal reaches ~9% town-level share by Year 3.','Raw-material contracts give an 8–11% input-cost advantage over regional players.'],
+   cmo:['Brand fit is near-perfect: reliability 84 / value 79 / durability 81 map directly onto category purchase drivers.','Low-involvement category — the retailer\u2019s recommendation decides 70%+ of purchases. Push beats pull.','Trade marketing (counter displays, mason meets) outperforms mass media here by 3–4× per rupee.'],
+   coo:['Rajasthan plant (dry/powder) retools in ~7 months for ₹28 Cr; putty and adhesives can run from day one.','Needs ~5,500 of the 14,000 touchpoints; building-materials retailers are already inside the network.','40 kg bags, low value density — freight discipline decides whether the margin survives.'],
+   analyst:['Category is fragmented: top five players hold 31% share; the rest is unbranded.','Asian Paints and Berger have announced mass-segment entry within 18 months — a share war is likely in Year 2.','Demand correlates ~0.8 with district housing starts — public data, highly forecastable.']},
+  catch:'<b>The catch:</b> margins are thin, the consumer never seeks the product, and two giants arrive in 18 months. Winning means out-executing on trade — fast, and before the window shuts.'},
+ {id:'d2', name:'The Nutrition Play', tag:'Affordable functional nutrition for daily-wage households',
+  stats:'260M daily-wage workers · Category creation · GM 35–40% at scale · Capital ₹160–200 Cr',
+  cap:'₹160–200 Cr',
+  summary:'India\u2019s 260 million daily-wage workers do physical labour on deficient diets. Affordable protein and micronutrients for this segment sit unserved between Horlicks pricing and nothing at all.',
+  packs:{
+   cfo:['₹160–200 Cr with returns unlikely before month 30 — most of the 36-month window is pure spend.','Gross margin reaches 35–40% at scale, but educating each first-time buyer costs an estimated ₹110–140.','Price must sit at ₹5–10 sachets; rural trade stretches the working-capital cycle painfully.'],
+   cmo:['No brand-permission problem — Bharat is trusted by exactly this household.','This is behaviour-change marketing: demos, vernacular content, community activation. Slow, expensive, hard to measure.','There is no competitor to steal from. Every single buyer must be created.'],
+   coo:['Powder formats run in the Rajasthan plant (dry) — a direct collision with Door 1 for the same factory.','Sachets ride the existing rural beat; no cold chain required.','FSSAI compliance and claim substantiation add 4–6 months before launch.'],
+   analyst:['Demand is real but unproven: pilots show 22% repeat at the ₹7 price point across two districts.','Health-claim regulation is tightening — two draft notifications are pending.','Micronutrient deficiency is mapped district-by-district: targeting can be genuinely data-led.']},
+  catch:'<b>The catch:</b> this is not a share fight — it is category creation. Education is expensive, slow and hard to measure, and the clock runs out at month 36.'},
+ {id:'d3', name:'The Aspiration Play', tag:'Skincare & haircare for Tier 2/3 first-jobbers',
+  stats:'+19%/yr (vs 6% metro) · GM 55–65% · New brand from zero · Capital ₹280–320 Cr',
+  cap:'₹280–320 Cr',
+  summary:'A 24-year-old in Jabalpur with her first salary, a smartphone, and no brand loyalty yet. Tier 2/3 personal care is the fastest-growing consumer segment in India — and she is actively looking.',
+  packs:{
+   cfo:['₹280–320 Cr — the costliest door; over 40% of spend is brand-building with uncertain CAC.','Gross margin 55–65%: the only door with true FMCG economics.','D2C acquisition costs are inflating ~25%/yr; payback hinges on ≥3 repeat purchases per buyer per year.'],
+   cmo:['"Bharat" is a liability here — modern 22/100, personal 9/100. A new brand must be built from zero.','The consumer is actively seeking: discovery happens on short video and quick commerce.','Zero in-house brand talent. A CMO-grade hire costs ~₹1.5 Cr/yr and realistically takes 6 months to land.'],
+   coo:['Maharashtra (wet/liquid) retools for creams and serums in ~9 months at ₹55 Cr — colliding with Door 4\u2019s paint plans.','The agri-retail network reaches roughly 9% of beauty outlets; the channel must be built or bought.','Quick commerce plus general-trade beauty counters means building distribution muscle Zeal has never had.'],
+   analyst:['Two market estimates conflict: ₹24,000 Cr (syndicated) vs ₹31,500 Cr (industry body) — they differ on rural inclusion. Reconcile before sizing.','Tier 2 quick-commerce coverage is doubling yearly; 41% of category trials are now online-influenced.','Loyalty is unformed: 63% of the segment switched brands in the past 12 months.']},
+  catch:'<b>The catch:</b> everything must be built from zero — brand, talent, channel, even the factory format. The highest ceiling of the five doors, standing on the weakest foundations.'},
+ {id:'d4', name:'The Infrastructure Play', tag:'Mason-first paints, primers & surface treatments',
+  stats:'B2B2C influencer channel · GM 18–22% · Capital ₹140–170 Cr · Cheapest door',
+  cap:'₹140–170 Cr',
+  summary:'The homeowner asks for "something good"; the mason chooses the brand. Every paint company advertises to the asker. Zeal\u2019s insight: build the brand for the chooser.',
+  packs:{
+   cfo:['Lowest capital requirement: ₹140–170 Cr; breakeven modelled at month 26–30.','Gross margin 18–22% — better than Door 1 — but the loyalty programme is opex-heavy at ₹18–22 Cr/yr.','Reorder dynamics are lumpy: project-based demand gives weak forecast visibility.'],
+   cmo:['The brand works: masons read "Bharat" as industrial-grade quality.','Loyalty currency is training, certification, insurance and earning tools — not advertising.','B2B2C: the brand lives inside the mason\u2019s recommendation, not on a hoarding.'],
+   coo:['Needs a field force of ~400 trade reps. Zeal has zero and can hire 15 — a partner or outsourced model is unavoidable.','Maharashtra (wet) suits paints and primers — a direct collision with Door 3.','Building-materials retail overlaps heavily with Door 1: shared beats and shared counters are possible.'],
+   analyst:['One mason influences an estimated 30–40 home decisions a year; ~2.1M active masons in the target towns.','No national player owns mason loyalty; a few regional cement brands run small pilots.','Programme economics: ₹900–1,200 per mason per year to run; conversion data is thin.']},
+  catch:'<b>The catch:</b> not a true consumer brand — a field-force machine Zeal does not have. The cheapest ticket of the five, with the slowest flywheel and the least predictable reorders.'},
+ {id:'d5', name:'The Platform Play', tag:'"ZealSetu" — phygital agri & household commerce for Tier 3',
+  stats:'Network-monetising · Take rate 8–12% · Capital ₹240–280 Cr · Payback > 36 months',
+  cap:'₹240–280 Cr',
+  summary:'Turn the 14,000 retailer touchpoints into ordering and fulfilment nodes — agri-inputs first, household staples next. The only door that feeds the network instead of consuming the factories.',
+  packs:{
+   cfo:['₹240–280 Cr for the full build; an asset-light variant exists at ₹140–160 Cr with less control and thinner data.','J-curve economics: contribution-positive only past month 32 in the base case — payback falls outside the window.','Take rate 8–12%; logistics at ₹38–55 per order is where the economics are won or lost.'],
+   cmo:['"Bharat ka bharosa" is the adoption unlock — trust is the scarcest commodity in rural commerce.','App-first fails this segment: assisted, retailer-mediated ordering beat app-only 3:1 in pilots.','Brand risk cuts both ways: a failed platform damages the trust every other door depends on.'],
+   coo:['Zero in-house tech: 8–10 of the 15 allowed hires must be product and engineering — or the build must be partnered.','Distributors fear disintermediation. Mishandled, channel conflict poisons the agri base business.','Uses no factory capacity at all — it frees both plants for any physical door.'],
+   analyst:['Funded rivals are close: DeHaat and AgroStar have raised $200M+ and are expanding into adjacent districts.','The data asset compounds: district-level order data sharpens credit, assortment and demand forecasts for every other door.','Rural e-commerce penetration in target towns: ~4% today, modelled at 13% by Year 3 — with enormous forecast variance.']},
+  catch:'<b>The catch:</b> the only door that appreciates the distribution asset — and the one needing talent Zeal least possesses, burning capital fastest, paying back slowest, and able to poison the channel if it fails.'}
+];
+
+const FACTOR_LIB = ['Asian Paints / Berger entry in 18 months','Group hurdle rate of 14%','Agri-service degradation above 30% network load','Factory retooling cost & time','FSSAI health-claim tightening','Monsoon-linked rural income cycles','Brand-stretch limits (modern 22 / personal 9)','Consumer-marketing talent gap','Push vs pull economics by category','Quick-commerce expansion into Tier 2','Mason influence on purchase decisions','Cost of creating a new category','Channel conflict with own distributors','Raw-material input-cost advantage','Payback timing vs the 36-month window','Capital reserve for shocks','Regional private-label competition','D2C CAC inflation (~25%/yr)','Rural data network effects','Repeat / reorder-rate uncertainty','One-shot mandate — no second tranche','Board risk appetite','Founder & integration risk in any acquisition','Two conflicting market-size estimates (Door 3)'];
+
+const CRIT_LIB = ['Strategic fit with existing assets','Payback speed','Gross-margin potential','Market size & growth','Competitive intensity','Brand transferability','Execution risk','Capital efficiency','Optionality / platform value','Regulatory risk','Talent requirement','Channel-conflict risk'];
+
+const HIRE_FN = ['Consumer mktg','Field sales / trade','Tech / product','Finance / strategy','Ops / supply'];
+const TOTAL_SECONDS = 180*60, TWIST_AT = 90*60, CAP_FULL = 500, CAP_CUT = 420;
+
+/* ============ STATE ============ */
+const LS = {
+  get(k){ try{return localStorage.getItem(k)}catch(e){return null} },
+  set(k,v){ try{localStorage.setItem(k,v)}catch(e){} },
+  del(k){ try{localStorage.removeItem(k)}catch(e){} }
+};
+const KEY = 'zeal_fivedoors_v1';
+let S = defaultState();
+
+function defaultState(){
+  return {
+    team:{no:1,name:'',members:{cfo:'',cmo:'',coo:'',analyst:''}},
+    startedAt:null, locked:false, twistFired:false, stage:0,
+    s1:{signals:Array(12).fill(false), prob:'', tA:'', tB:'', lens:{cfo:'',cmo:'',coo:'',analyst:''}},
+    s2:{opened:[], strats:[]},
+    s3:{factors:[]},
+    s4:{crits:[], scores:{}},
+    s5:{chosen:-1, alloc:{d1:0,d2:0,d3:0,d4:0,d5:0,reserve:0}, facRaj:'idle', facMah:'idle', dist:20,
+        hires:[0,0,0,0,0], phases:['','',''], kills:['','',''], rejected:{}, risks:[['',''],['',''],['','']],
+        chairman:{t:'',n:'',u:''}},
+    twistResp:''
+  };
+}
+function save(){ LS.set(KEY, JSON.stringify(S)); const d=document.getElementById('saveDot'); if(d){d.textContent='saved ✓'; clearTimeout(save._t); save._t=setTimeout(()=>d.textContent='auto-save on',1600);} }
+function load(){ const raw=LS.get(KEY); if(!raw) return null; try{return JSON.parse(raw)}catch(e){return null} }
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const wc = s => (String(s||'').trim().match(/\S+/g)||[]).length;
+function capNow(){ return S.twistFired ? CAP_CUT : CAP_FULL; }
+
+/* ============ SETUP ============ */
+const STAGES = [
+  {n:'00',name:'Brief',meta:'20 min · read the room'},
+  {n:'01',name:'Frame',meta:'25 min · M1 Understanding'},
+  {n:'02',name:'Explore',meta:'40 min · M2 Solutions'},
+  {n:'03',name:'Forces',meta:'30 min · M3 Factors'},
+  {n:'04',name:'Weigh',meta:'25 min · M4 Weightage'},
+  {n:'05',name:'Decide',meta:'40 min · M5 Final solution'}
+];
+
+function initSetup(){
+  const sel=$('teamNo');
+  for(let i=1;i<=15;i++){const o=document.createElement('option');o.value=i;o.textContent='Team '+String(i).padStart(2,'0');sel.appendChild(o);}
+  const saved = load();
+  if(saved && saved.startedAt){
+    $('resumeNote').classList.remove('hidden');
+    $('resumeBtn').onclick = ()=>{ S=saved; enterApp(); };
+    $('freshBtn').onclick = ()=>{ LS.del(KEY); $('resumeNote').classList.add('hidden'); };
+  }
+  $('startBtn').onclick = ()=>{
+    S = defaultState();
+    S.team.no = +$('teamNo').value;
+    S.team.name = $('teamName').value.trim() || ('Team '+String(S.team.no).padStart(2,'0'));
+    S.team.members = {cfo:$('mCfo').value.trim(),cmo:$('mCmo').value.trim(),coo:$('mCoo').value.trim(),analyst:$('mAnalyst').value.trim()};
+    S.startedAt = Date.now();
+    save(); enterApp();
+  };
+}
+
+function enterApp(){
+  $('setup').classList.add('hidden');
+  $('app').classList.remove('hidden');
+  $('teamChip').innerHTML = 'T'+String(S.team.no).padStart(2,'0')+' · <b>'+esc(S.team.name)+'</b>';
+  buildNav(); renderSignals(); bindStage1(); renderDoors(); renderStrats(); renderFactorLib(); renderFactors();
+  renderCritLib(); renderCrits(); renderMatrix(); bindStage5(); renderStage5(); refreshTwistUI();
+  gotoStage(S.stage||0);
+  if(S.locked) applyLockUI();
+  setInterval(tick,1000); tick();
+}
+
+function buildNav(){
+  const nav=$('stageNav'); nav.innerHTML='';
+  STAGES.forEach((st,i)=>{
+    const b=document.createElement('button'); b.className='stage-btn'; b.id='nav'+i;
+    b.innerHTML='<div class="st-top"><span class="st-num">'+st.n+'</span><span class="st-name">'+st.name+'</span><span class="st-done" id="done'+i+'"></span></div><div class="st-meta">'+st.meta+'</div>';
+    b.onclick=()=>gotoStage(i); nav.appendChild(b);
+  });
+}
+function gotoStage(i){
+  S.stage=i; save();
+  document.querySelectorAll('.stage').forEach(s=>s.classList.remove('visible'));
+  $('st'+i).classList.add('visible');
+  document.querySelectorAll('.stage-btn').forEach(b=>b.classList.remove('active'));
+  $('nav'+i).classList.add('active');
+  try{window.scrollTo({top:0});}catch(e){}
+}
+
+/* ============ TIMER & TWIST ============ */
+function tick(){
+  if(!S.startedAt) return;
+  const elapsed = Math.floor((Date.now()-S.startedAt)/1000);
+  const left = Math.max(0, TOTAL_SECONDS - elapsed);
+  const h=Math.floor(left/3600), m=Math.floor(left%3600/60), s=left%60;
+  const c=$('clock'); c.textContent = h+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  c.classList.toggle('warn', left<=30*60 && left>10*60);
+  c.classList.toggle('crit', left<=10*60);
+  if(!S.twistFired && elapsed>=TWIST_AT){ fireTwist(); }
+  if(left===0 && !S.locked){ doLock(true); }
+}
+function fireTwist(){
+  S.twistFired=true; save();
+  refreshTwistUI();
+  $('twistBack').classList.remove('hidden');
+}
+function refreshTwistUI(){
+  if(!S.twistFired) return;
+  $('capitalChip').innerHTML='CAPITAL <b>₹420 Cr</b> · CUT';
+  $('capitalChip').classList.add('cut');
+  $('envelopeSlot').classList.remove('hidden');
+  $('twistInline').classList.remove('hidden');
+  $('twistResp').value = S.twistResp||'';
+  updTwistCount(); renderAllocGauge();
+}
+
+/* ============ STAGE 1 ============ */
+function renderSignals(){
+  const g=$('sigGrid'); g.innerHTML='';
+  SIGNALS.forEach((sig,i)=>{
+    const b=document.createElement('button'); b.className='sig'+(S.s1.signals[i]?' picked':'');
+    b.innerHTML='<span class="tag">'+(S.s1.signals[i]?'◉ SIGNAL':'○ statement '+String(i+1).padStart(2,'0'))+'</span>'+esc(sig.t);
+    b.onclick=()=>{
+      const picked = S.s1.signals.filter(Boolean).length;
+      if(!S.s1.signals[i] && picked>=6) return;
+      S.s1.signals[i]=!S.s1.signals[i]; save(); renderSignals();
+    };
+    g.appendChild(b);
+  });
+  const n=S.s1.signals.filter(Boolean).length;
+  const el=$('sigCount'); el.textContent=n+' of 6 selected'; el.className='count '+(n===6?'ok':'');
+}
+function bindStage1(){
+  $('probStmt').value=S.s1.prob; $('tensionA').value=S.s1.tA; $('tensionB').value=S.s1.tB;
+  ['cfo','cmo','coo','analyst'].forEach(r=>{ $('lens'+r[0].toUpperCase()+r.slice(1)).value=S.s1.lens[r]; });
+  $('probStmt').oninput=e=>{S.s1.prob=e.target.value; const n=wc(S.s1.prob); const el=$('probCount'); el.textContent=n+' / 40 words'; el.className='count '+(n>40?'bad':n>0?'ok':''); save();};
+  $('probStmt').oninput({target:$('probStmt')});
+  $('tensionA').oninput=e=>{S.s1.tA=e.target.value;save()};
+  $('tensionB').oninput=e=>{S.s1.tB=e.target.value;save()};
+  $('lensCfo').oninput=e=>{S.s1.lens.cfo=e.target.value;save()};
+  $('lensCmo').oninput=e=>{S.s1.lens.cmo=e.target.value;save()};
+  $('lensCoo').oninput=e=>{S.s1.lens.coo=e.target.value;save()};
+  $('lensAnalyst').oninput=e=>{S.s1.lens.analyst=e.target.value;save()};
+}
+
+/* ============ STAGE 2 : DOORS & STRATEGIES ============ */
+let ddRole='cfo', ddIdx=0;
+function renderDoors(){
+  const w=$('doorsWall'); w.innerHTML='';
+  DOORS.forEach((d,i)=>{
+    const opened=S.s2.opened.includes(d.id);
+    const b=document.createElement('button'); b.className='door'+(opened?' opened':'');
+    b.innerHTML='<div class="door-frame"><span class="dnum">DOOR '+(i+1)+'</span><span class="dname">'+esc(d.name)+'</span><span class="dtag">'+esc(d.tag)+'</span><span class="dcap">'+esc(d.cap)+'</span></div><div class="door-label">'+(opened?'re-open dossier':'open dossier')+'</div>';
+    b.onclick=()=>openDoor(i); w.appendChild(b);
+  });
+}
+function openDoor(i){
+  ddIdx=i; const d=DOORS[i];
+  if(!S.s2.opened.includes(d.id)){S.s2.opened.push(d.id);save();renderDoors();}
+  $('ddNum').textContent='DOOR '+(i+1)+' · DOSSIER';
+  $('ddTitle').textContent=d.name+' — '+d.tag;
+  $('ddStats').textContent=d.stats;
+  $('ddSummary').textContent=d.summary;
+  $('ddCatch').innerHTML=d.catch;
+  renderDDTabs(); $('doorBack').classList.remove('hidden');
+}
+function renderDDTabs(){
+  const tabs=$('ddTabs'); tabs.innerHTML='';
+  Object.keys(ROLES).forEach(r=>{
+    const b=document.createElement('button'); b.className='role-tab'+(r===ddRole?' active':'');
+    b.textContent=ROLES[r]+' intel'; b.onclick=()=>{ddRole=r;renderDDTabs();};
+    tabs.appendChild(b);
+  });
+  const ul=$('ddPack'); ul.innerHTML='';
+  DOORS[ddIdx].packs[ddRole].forEach(p=>{const li=document.createElement('li');li.textContent=p;ul.appendChild(li);});
+}
+$('doorX').onclick=()=>$('doorBack').classList.add('hidden');
+$('doorBack').addEventListener('click',e=>{if(e.target===$('doorBack'))$('doorBack').classList.add('hidden');});
+
+function renderStrats(){
+  const list=$('stratList'); list.innerHTML='';
+  S.s2.strats.forEach((st,i)=>{
+    const c=document.createElement('div'); c.className='strat-card';
+    c.innerHTML =
+     '<button class="del-btn" data-del="'+i+'">✕ remove</button>'+
+     '<div class="shead"><span class="sno">STRATEGY '+String.fromCharCode(65+i)+'</span>'+
+     '<input data-f="name" data-i="'+i+'" placeholder="Name the bet — e.g., The Construction Stack" maxlength="48" value="'+esc(st.name)+'" style="max-width:380px;font-weight:600"></div>'+
+     '<div class="strat-grid"><div>'+
+       '<label style="font-size:11.5px;font-weight:600;color:var(--steel)">Doors opened</label>'+
+       '<div class="door-checks">'+DOORS.map((d,di)=>'<label class="dchk"><input type="checkbox" data-dchk="'+di+'" data-i="'+i+'" '+(st.doors.includes(d.id)?'checked':'')+'>D'+(di+1)+'</label>').join('')+'</div>'+
+       '<label style="font-size:11.5px;font-weight:600;color:var(--steel);margin-top:8px;display:block">Sequence &amp; timing</label>'+
+       '<input data-f="seq" data-i="'+i+'" maxlength="90" placeholder="e.g., D4 months 0–12 → fold into D1 at month 12" value="'+esc(st.seq)+'">'+
+       '<label style="font-size:11.5px;font-weight:600;color:var(--steel);margin-top:8px;display:block">Indicative capital split</label>'+
+       '<input data-f="split" data-i="'+i+'" maxlength="90" placeholder="e.g., D4 ₹150 · D1 ₹220 · reserve ₹80" value="'+esc(st.split)+'">'+
+     '</div><div>'+
+       '<label style="font-size:11.5px;font-weight:600;color:var(--steel)">Thesis — ≤ 30 words</label>'+
+       '<textarea data-f="thesis" data-i="'+i+'" maxlength="260" placeholder="The one paragraph the Chairman remembers.">'+esc(st.thesis)+'</textarea>'+
+       '<label style="font-size:11.5px;font-weight:600;color:var(--steel);margin-top:8px;display:block">The risk that kills it</label>'+
+       '<input data-f="risk" data-i="'+i+'" maxlength="110" placeholder="Name the bullet with your strategy\u2019s name on it." value="'+esc(st.risk)+'">'+
+     '</div></div>';
+    list.appendChild(c);
+  });
+  list.querySelectorAll('[data-f]').forEach(el=>{
+    el.oninput=e=>{ S.s2.strats[+el.dataset.i][el.dataset.f]=el.value; save(); refreshStratDeps(); };
+  });
+  list.querySelectorAll('[data-dchk]').forEach(el=>{
+    el.onchange=()=>{
+      const st=S.s2.strats[+el.dataset.i], id=DOORS[+el.dataset.dchk].id;
+      if(el.checked){ if(!st.doors.includes(id)) st.doors.push(id); } else { st.doors=st.doors.filter(x=>x!==id); }
+      save(); refreshStratDeps();
+    };
+  });
+  list.querySelectorAll('[data-del]').forEach(el=>{
+    el.onclick=()=>{ S.s2.strats.splice(+el.dataset.del,1); save(); renderStrats(); renderMatrix(); renderChosen(); };
+  });
+  const n=S.s2.strats.length;
+  const cEl=$('stratCount'); cEl.textContent=n+' of 2–4 strategies built'; cEl.className='count '+(n>=2?'ok':'bad');
+  $('addStrat').disabled = n>=4 || S.locked;
+  refreshStratDeps();
+}
+function refreshStratDeps(){ renderMatrix(); renderChosen(); renderRejected(); }
+$('addStrat').onclick=()=>{
+  if(S.s2.strats.length>=4) return;
+  S.s2.strats.push({name:'',doors:[],seq:'',split:'',thesis:'',risk:''}); save(); renderStrats();
+};
+/* ============ STAGE 3 : FACTORS ============ */
+function renderFactorLib(){
+  const box=$('libChips'); box.innerHTML='';
+  FACTOR_LIB.forEach(f=>{
+    const used=S.s3.factors.some(x=>x.name===f);
+    const b=document.createElement('button'); b.className='lib-chip'+(used?' used':''); b.textContent=f;
+    b.onclick=()=>addFactor(f,false); box.appendChild(b);
+  });
+}
+function addFactor(name,custom){
+  name=String(name||'').trim();
+  if(!name || S.s3.factors.some(x=>x.name===name)) return;
+  S.s3.factors.push({name,type:'external',impact:3,unc:3,owner:'analyst',custom:!!custom});
+  save(); renderFactorLib(); renderFactors();
+}
+$('addFactorBtn').onclick=()=>{ addFactor($('customFactor').value,true); $('customFactor').value=''; };
+$('customFactor').addEventListener('keydown',e=>{ if(e.key==='Enter'){e.preventDefault();$('addFactorBtn').click();} });
+
+function renderFactors(){
+  const tb=$('factorBody'); tb.innerHTML='';
+  S.s3.factors.forEach((f,i)=>{
+    const tr=document.createElement('tr'); tr.className='factor-row';
+    tr.innerHTML='<td class="mono">'+(i+1)+(f.custom?'★':'')+'</td><td style="font-size:12.5px">'+esc(f.name)+'</td>'+
+     '<td><select data-ff="type" data-i="'+i+'"><option value="internal"'+(f.type==='internal'?' selected':'')+'>Internal</option><option value="external"'+(f.type==='external'?' selected':'')+'>External</option></select></td>'+
+     '<td><select data-ff="impact" data-i="'+i+'">'+[1,2,3,4,5].map(v=>'<option'+(f.impact===v?' selected':'')+'>'+v+'</option>').join('')+'</select></td>'+
+     '<td><select data-ff="unc" data-i="'+i+'">'+[1,2,3,4,5].map(v=>'<option'+(f.unc===v?' selected':'')+'>'+v+'</option>').join('')+'</select></td>'+
+     '<td><select data-ff="owner" data-i="'+i+'">'+Object.keys(ROLES).map(r=>'<option value="'+r+'"'+(f.owner===r?' selected':'')+'>'+ROLES[r]+'</option>').join('')+'</select></td>'+
+     '<td><button class="del-btn" style="position:static" data-fdel="'+i+'">✕</button></td>';
+    tb.appendChild(tr);
+  });
+  tb.querySelectorAll('[data-ff]').forEach(el=>{
+    el.onchange=()=>{ const f=S.s3.factors[+el.dataset.i]; const k=el.dataset.ff;
+      f[k]=(k==='impact'||k==='unc')?+el.value:el.value; save(); drawQuad(); };
+  });
+  tb.querySelectorAll('[data-fdel]').forEach(el=>{
+    el.onclick=()=>{ S.s3.factors.splice(+el.dataset.fdel,1); save(); renderFactorLib(); renderFactors(); };
+  });
+  const n=S.s3.factors.length;
+  const el=$('factorCount'); el.textContent=n+' factors mapped (minimum 8)'; el.className='count '+(n>=8?'ok':'bad');
+  drawQuad(); updChecks();
+}
+function drawQuad(){
+  const svg=$('quad'); const W=380,H=320,pad=34;
+  let h='<line x1="'+pad+'" y1="'+(H/2)+'" x2="'+(W-10)+'" y2="'+(H/2)+'" stroke="#C9D0DA"/>';
+  h+='<line x1="'+((pad+W-10)/2)+'" y1="14" x2="'+((pad+W-10)/2)+'" y2="'+(H-pad)+'" stroke="#C9D0DA"/>';
+  h+='<rect x="'+pad+'" y="14" width="'+(W-10-pad)+'" height="'+(H-pad-14)+'" fill="none" stroke="#161D29" stroke-width="1.4" rx="8"/>';
+  h+='<text x="'+(W/2)+'" y="'+(H-8)+'" font-size="10" font-family="IBM Plex Mono" fill="#6B7787" text-anchor="middle">UNCERTAINTY →</text>';
+  h+='<text x="12" y="'+(H/2)+'" font-size="10" font-family="IBM Plex Mono" fill="#6B7787" text-anchor="middle" transform="rotate(-90 12 '+(H/2)+')">IMPACT →</text>';
+  S.s3.factors.forEach((f,i)=>{
+    const x=pad+((f.unc-0.5)/5)*(W-10-pad);
+    const y=(H-pad)-((f.impact-0.5)/5)*(H-pad-14);
+    const col=f.type==='internal'?'#23355C':'#E4572E';
+    h+='<circle cx="'+x+'" cy="'+y+'" r="9" fill="'+col+'" opacity="0.88"/>';
+    h+='<text x="'+x+'" y="'+(y+3.5)+'" font-size="9" font-family="IBM Plex Mono" fill="#fff" text-anchor="middle">'+(i+1)+'</text>';
+  });
+  h+='<circle cx="'+(W-118)+'" cy="24" r="5" fill="#23355C"/><text x="'+(W-108)+'" y="28" font-size="9.5" font-family="IBM Plex Mono" fill="#43526B">internal</text>';
+  h+='<circle cx="'+(W-56)+'" cy="24" r="5" fill="#E4572E"/><text x="'+(W-46)+'" y="28" font-size="9.5" font-family="IBM Plex Mono" fill="#43526B">external</text>';
+  svg.innerHTML=h;
+}
+
+/* ============ STAGE 4 : WEIGHTS & MATRIX ============ */
+function renderCritLib(){
+  const box=$('critChips'); box.innerHTML='';
+  CRIT_LIB.forEach(c=>{
+    const used=S.s4.crits.some(x=>x.name===c);
+    const b=document.createElement('button'); b.className='lib-chip'+(used?' used':''); b.textContent=c;
+    b.onclick=()=>addCrit(c); box.appendChild(b);
+  });
+}
+function addCrit(name){
+  name=String(name||'').trim();
+  if(!name || S.s4.crits.some(x=>x.name===name) || S.s4.crits.length>=7) return;
+  S.s4.crits.push({name,weight:0}); save(); renderCritLib(); renderCrits(); renderMatrix();
+}
+$('addCritBtn').onclick=()=>{ addCrit($('customCrit').value); $('customCrit').value=''; };
+$('customCrit').addEventListener('keydown',e=>{ if(e.key==='Enter'){e.preventDefault();$('addCritBtn').click();} });
+
+function renderCrits(){
+  const tb=$('critBody'); tb.innerHTML='';
+  S.s4.crits.forEach((c,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td style="font-size:13px;width:70%">'+esc(c.name)+'</td>'+
+      '<td><input type="number" min="0" max="100" value="'+c.weight+'" data-w="'+i+'" style="width:74px;text-align:center"></td>'+
+      '<td><button class="del-btn" style="position:static" data-cdel="'+i+'">✕</button></td>';
+    tb.appendChild(tr);
+  });
+  tb.querySelectorAll('[data-w]').forEach(el=>{
+    el.oninput=()=>{ S.s4.crits[+el.dataset.w].weight=Math.max(0,Math.min(100,+el.value||0)); save(); updWsum(); computeTotals(); updChecks(); };
+  });
+  tb.querySelectorAll('[data-cdel]').forEach(el=>{
+    el.onclick=()=>{ S.s4.crits.splice(+el.dataset.cdel,1); save(); renderCritLib(); renderCrits(); renderMatrix(); };
+  });
+  updWsum();
+}
+function wsum(){ return S.s4.crits.reduce((a,c)=>a+(+c.weight||0),0); }
+function updWsum(){
+  const t=wsum(); const bar=$('wsumBar');
+  bar.querySelector('i').style.width=Math.min(100,t)+'%';
+  bar.className='wsum '+(t===100?'exact':(t>100?'over':''));
+  const lbl=$('wsumLbl'); lbl.textContent='Total weight: '+t+' / 100 · '+S.s4.crits.length+' of 5–7 criteria';
+  lbl.className='count '+(t===100&&S.s4.crits.length>=5?'ok':(t>100?'bad':''));
+}
+function scoreKey(ci,si){ return ci+'_'+si; }
+function renderMatrix(){
+  const T=$('matrixTable');
+  if(!S.s4.crits.length||!S.s2.strats.length){ T.innerHTML='<tr><td style="color:var(--muted);font-size:13px;padding:14px">Add criteria above and at least two strategies in Agenda 02 to unlock the matrix.</td></tr>'; $('totals').innerHTML=''; return; }
+  let h='<thead><tr><th>Criterion</th><th>Wt</th>'+S.s2.strats.map((s,i)=>'<th>'+String.fromCharCode(65+i)+' · '+esc(s.name||'Unnamed')+'</th>').join('')+'</tr></thead><tbody>';
+  S.s4.crits.forEach((c,ci)=>{
+    h+='<tr><td style="font-size:12.5px">'+esc(c.name)+'</td><td class="mono">'+c.weight+'</td>';
+    S.s2.strats.forEach((s,si)=>{
+      const v=S.s4.scores[scoreKey(ci,si)]||'';
+      h+='<td><input type="number" min="1" max="10" value="'+v+'" data-sc="'+scoreKey(ci,si)+'" placeholder="–"></td>';
+    });
+    h+='</tr>';
+  });
+  T.innerHTML=h+'</tbody>';
+  T.querySelectorAll('[data-sc]').forEach(el=>{
+    el.oninput=()=>{ const v=+el.value; S.s4.scores[el.dataset.sc]=(v>=1&&v<=10)?v:0; save(); computeTotals(); updChecks(); };
+  });
+  computeTotals();
+}
+function weightedTotal(si,crits){
+  crits=crits||S.s4.crits;
+  let t=0; crits.forEach((c,ci)=>{ t+=(c.weight||0)*(S.s4.scores[scoreKey(ci,si)]||0); });
+  return t/100;
+}
+function computeTotals(){
+  const box=$('totals'); if(!S.s4.crits.length||!S.s2.strats.length){box.innerHTML='';return;}
+  const vals=S.s2.strats.map((s,si)=>({si,v:weightedTotal(si)}));
+  const max=Math.max(1,...vals.map(x=>x.v)), best=Math.max(...vals.map(x=>x.v));
+  box.innerHTML=vals.map(x=>{
+    const s=S.s2.strats[x.si];
+    return '<div class="totbar'+(x.v===best&&x.v>0?' win':'')+'"><span class="lbl">'+String.fromCharCode(65+x.si)+' · '+esc(s.name||'Unnamed')+'</span><span class="bar"><i style="width:'+(x.v/max*100)+'%"></i></span><span class="val">'+x.v.toFixed(1)+'</span></div>';
+  }).join('');
+}
+$('sensBtn').onclick=()=>{
+  if(!S.s4.crits.length||S.s2.strats.length<2){$('sensOut').textContent='Build the matrix first.';return;}
+  const top=S.s4.crits.reduce((a,c,i)=>c.weight>S.s4.crits[a].weight?i:a,0);
+  const base=S.s2.strats.map((s,si)=>weightedTotal(si));
+  const baseWin=base.indexOf(Math.max(...base));
+  const out=[];
+  [[-10,'−10'],[10,'+10']].forEach(([d,lbl])=>{
+    const crits=S.s4.crits.map((c,i)=>({name:c.name,weight:i===top?Math.max(0,c.weight+d):c.weight}));
+    const vals=S.s2.strats.map((s,si)=>weightedTotal(si,crits));
+    const win=vals.indexOf(Math.max(...vals));
+    out.push('<b>'+lbl+' on "'+esc(S.s4.crits[top].name)+'":</b> winner is '+String.fromCharCode(65+win)+' ('+vals[win].toFixed(1)+')'+(win!==baseWin?' — <span style="color:var(--flame);font-weight:700">the winner flips!</span>':' — holds.'));
+  });
+  $('sensOut').innerHTML=out.join('<br>')+'<br><span class="count">Recorded in the memo. A recommendation that survives ±10 on its heaviest weight is a recommendation, not a preference.</span>';
+  S.s4.sens=$('sensOut').textContent; save();
+};
+/* ============ STAGE 5 ============ */
+function bindStage5(){
+  ['facRaj','facMah'].forEach(fid=>{
+    $(fid).innerHTML='<option value="idle">Keep idle / divest review</option>'+DOORS.map((d,i)=>'<option value="'+d.id+'">D'+(i+1)+' · '+d.name+'</option>').join('');
+  });
+  $('facRaj').value=S.s5.facRaj; $('facMah').value=S.s5.facMah;
+  $('facRaj').onchange=e=>{S.s5.facRaj=e.target.value;save();facNote();};
+  $('facMah').onchange=e=>{S.s5.facMah=e.target.value;save();facNote();};
+  $('distSlider').value=S.s5.dist;
+  $('distSlider').oninput=e=>{S.s5.dist=+e.target.value;save();distNote();};
+  const hg=$('hireGrid'); hg.innerHTML='';
+  HIRE_FN.forEach((f,i)=>{
+    const d=document.createElement('div');
+    d.innerHTML='<label style="font-size:10.5px;color:var(--muted);font-family:var(--mono)">'+f+'</label><input type="number" min="0" max="15" data-h="'+i+'" value="'+S.s5.hires[i]+'" style="text-align:center">';
+    hg.appendChild(d);
+  });
+  hg.querySelectorAll('[data-h]').forEach(el=>{ el.oninput=()=>{S.s5.hires[+el.dataset.h]=Math.max(0,+el.value||0);save();hireNote();updChecks();}; });
+  ['ph1','ph2','ph3'].forEach((id,i)=>{ $(id).value=S.s5.phases[i]; $(id).oninput=e=>{S.s5.phases[i]=e.target.value;save();updChecks();}; });
+  ['k1','k2','k3'].forEach((id,i)=>{ $(id).value=S.s5.kills[i]; $(id).oninput=e=>{S.s5.kills[i]=e.target.value;save();updChecks();}; });
+  [['r1',0,0],['m1',0,1],['r2',1,0],['m2',1,1],['r3',2,0],['m3',2,1]].forEach(([id,a,b])=>{ $(id).value=S.s5.risks[a][b]; $(id).oninput=e=>{S.s5.risks[a][b]=e.target.value;save();updChecks();}; });
+  $('qThis').value=S.s5.chairman.t; $('qNow').value=S.s5.chairman.n; $('qUs').value=S.s5.chairman.u;
+  $('qThis').oninput=e=>{S.s5.chairman.t=e.target.value;save();updChecks();};
+  $('qNow').oninput=e=>{S.s5.chairman.n=e.target.value;save();updChecks();};
+  $('qUs').oninput=e=>{S.s5.chairman.u=e.target.value;save();updChecks();};
+  $('twistResp').oninput=e=>{S.twistResp=e.target.value;save();updTwistCount();updChecks();};
+  $('chosenStrat').onchange=e=>{S.s5.chosen=+e.target.value;save();renderRejected();updChecks();};
+  $('lockBtn').onclick=()=>doLock(false);
+  $('jsonBtn').onclick=downloadJSON;
+  $('exportBtn').onclick=()=>{buildMemo();$('memoOverlay').classList.remove('hidden');};
+  $('memoClose').onclick=()=>$('memoOverlay').classList.add('hidden');
+  $('twistAck').onclick=()=>$('twistBack').classList.add('hidden');
+  $('envelopeBtn').onclick=()=>$('twistBack').classList.remove('hidden');
+}
+function updTwistCount(){ const n=wc(S.twistResp); const el=$('twistCount'); el.textContent=n+' / 80 words'; el.className='count '+(n>80?'bad':n>0?'ok':''); }
+function renderStage5(){ renderChosen(); renderAlloc(); facNote(); distNote(); hireNote(); renderRejected(); updChecks(); }
+function renderChosen(){
+  const sel=$('chosenStrat'); if(!sel) return;
+  sel.innerHTML='<option value="-1">— select the strategy you are recommending —</option>'+
+    S.s2.strats.map((s,i)=>'<option value="'+i+'"'+(S.s5.chosen===i?' selected':'')+'>'+String.fromCharCode(65+i)+' · '+esc(s.name||'Unnamed')+'</option>').join('');
+}
+function renderAlloc(){
+  const box=$('allocRows'); box.innerHTML='';
+  const rows=[...DOORS.map((d,i)=>({k:d.id,nm:'D'+(i+1)+' · '+d.name,sub:d.cap})),{k:'reserve',nm:'Reserve / contingency',sub:'the CFO\u2019s favourite line'}];
+  rows.forEach(r=>{
+    const div=document.createElement('div'); div.className='alloc-row';
+    div.innerHTML='<span class="nm">'+r.nm+'<small>'+r.sub+'</small></span>'+
+      '<input type="number" min="0" step="5" data-al="'+r.k+'" value="'+(S.s5.alloc[r.k]||0)+'" style="text-align:right">'+
+      '<span class="count">₹ Cr over 36 months</span>';
+    box.appendChild(div);
+  });
+  box.querySelectorAll('[data-al]').forEach(el=>{
+    el.oninput=()=>{ S.s5.alloc[el.dataset.al]=Math.max(0,+el.value||0); save(); renderAllocGauge(); updChecks(); };
+  });
+  renderAllocGauge();
+}
+function allocTotal(){ return Object.values(S.s5.alloc).reduce((a,b)=>a+(+b||0),0); }
+function renderAllocGauge(){
+  const t=allocTotal(), cap=capNow();
+  const g=$('capGauge'); if(!g) return;
+  g.querySelector('i').style.width=Math.min(100,t/cap*100)+'%';
+  g.classList.toggle('over',t>cap);
+  $('capLabel').textContent='₹'+t+' Cr deployed of ₹'+cap+' Cr'+(t>cap?' · OVER BUDGET':'');
+}
+function facNote(){
+  const wantRaj={d1:1,d2:1}, wantMah={d2:1,d3:1,d4:1};
+  let msg=[];
+  if(S.s5.facRaj!=='idle'&&!wantRaj[S.s5.facRaj]) msg.push('Rajasthan is a dry/powder plant — check the format fit for that door.');
+  if(S.s5.facMah!=='idle'&&!wantMah[S.s5.facMah]) msg.push('Maharashtra is a liquid/wet plant — check the format fit for that door.');
+  const el=$('facNote'); el.textContent=msg.join(' ')||'Format fit looks plausible. Remember: one large line or two small ones across both plants.'; el.className='count '+(msg.length?'bad':'');
+  updChecks();
+}
+function distNote(){
+  $('distVal').textContent=S.s5.dist+'%';
+  const el=$('distNote');
+  el.textContent=S.s5.dist>30?'Above 30% — est. ₹35 Cr/yr agri revenue at risk. The board will want this acknowledged.':'Within the 30% safe-load threshold for the agri base business.';
+  el.className='count '+(S.s5.dist>30?'bad':'ok');
+}
+function hireSum(){ return S.s5.hires.reduce((a,b)=>a+(+b||0),0); }
+function hireNote(){
+  const t=hireSum(); const el=$('hireNote');
+  el.textContent=t+' of 15 hires allocated'; el.className='count '+(t>15?'bad':(t>0?'ok':''));
+}
+function renderRejected(){
+  const box=$('rejectedList'); if(!box) return; box.innerHTML='';
+  const chosen=S.s2.strats[S.s5.chosen];
+  if(S.s5.chosen<0||!chosen){ box.innerHTML='<p class="count">Select your recommended strategy in 5.1 — the unopened doors will appear here for the defence.</p>'; return; }
+  const rej=DOORS.filter(d=>!chosen.doors.includes(d.id));
+  if(!rej.length){ box.innerHTML='<p class="count">You have opened every door. Bold. The board will ask if you understood the word "focus".</p>'; }
+  rej.forEach(d=>{
+    const i=DOORS.indexOf(d);
+    const div=document.createElement('div'); div.style.marginBottom='9px';
+    div.innerHTML='<label style="font-size:12.5px;font-weight:600;color:var(--steel)">D'+(i+1)+' · '+d.name+' — why not (one line)</label>'+
+      '<input data-rej="'+d.id+'" maxlength="160" value="'+esc(S.s5.rejected[d.id]||'')+'">';
+    box.appendChild(div);
+  });
+  box.querySelectorAll('[data-rej]').forEach(el=>{ el.oninput=()=>{S.s5.rejected[el.dataset.rej]=el.value;save();updChecks();}; });
+}
+
+/* ============ CHECKS & LOCK ============ */
+function getChecks(){
+  const cap=capNow(), t=allocTotal();
+  const chosen=S.s2.strats[S.s5.chosen];
+  const rejNeeded=chosen?DOORS.filter(d=>!chosen.doors.includes(d.id)):[];
+  const list=[
+    {ok:wc(S.s1.prob)>0&&wc(S.s1.prob)<=40&&S.s1.tA.trim()&&S.s1.tB.trim(), t:'M1 · Problem stated (≤40 words) and core tension named'},
+    {ok:S.s1.signals.filter(Boolean).length===6, t:'M1 · Six signals selected in the Signal Sort'},
+    {ok:Object.values(S.s1.lens).every(v=>v.trim()), t:'M1 · All four chair lenses filed'},
+    {ok:S.s2.strats.length>=2&&S.s2.strats.every(s=>s.name.trim()&&s.doors.length&&s.thesis.trim()), t:'M2 · ≥2 strategies, each named, with doors and a thesis'},
+    {ok:S.s3.factors.length>=8, t:'M3 · ≥8 factors rated and owned'},
+    {ok:wsum()===100&&S.s4.crits.length>=5, t:'M4 · 5–7 criteria, weights total exactly 100'},
+    {ok:S.s4.crits.length>0&&S.s2.strats.length>0&&S.s4.crits.every((c,ci)=>S.s2.strats.every((s,si)=>(S.s4.scores[scoreKey(ci,si)]||0)>0)), t:'M4 · Every matrix cell scored 1–10'},
+    {ok:S.s5.chosen>=0, t:'M5 · Recommended strategy selected'},
+    {ok:t>0&&t<=cap, t:'M5 · Capital deployed > 0 and within ₹'+cap+' Cr'},
+    {ok:hireSum()<=15&&hireSum()>0, t:'M5 · Hiring plan within 15'},
+    {ok:S.s5.phases.every(p=>p.trim())&&S.s5.kills.every(k=>k.trim()), t:'M5 · Three phases with go/kill criteria'},
+    {ok:rejNeeded.every(d=>(S.s5.rejected[d.id]||'').trim())&&S.s5.chosen>=0, t:'M5 · Every unopened door defended'},
+    {ok:S.s5.risks.every(r=>r[0].trim()&&r[1].trim()), t:'M5 · Risk register complete'},
+    {ok:[S.s5.chairman.t,S.s5.chairman.n,S.s5.chairman.u].every(v=>v.trim()), t:'M5 · Chairman\u2019s three questions answered'}
+  ];
+  if(S.twistFired) list.push({ok:wc(S.twistResp)>0&&wc(S.twistResp)<=80, t:'TWIST · Red Envelope response filed (≤80 words)'});
+  return list;
+}
+function updChecks(){
+  const ul=$('checks'); if(!ul) return;
+  const list=getChecks(); ul.innerHTML='';
+  list.forEach(c=>{
+    const li=document.createElement('li'); li.className=c.ok?'ok':'no';
+    li.innerHTML='<span class="tick">'+(c.ok?'✓':'✕')+'</span><span>'+c.t+'</span>';
+    ul.appendChild(li);
+  });
+  const all=list.every(c=>c.ok);
+  if($('lockBtn')){ $('lockBtn').disabled=S.locked||!all;
+  $('lockHint').textContent=S.locked?'Console locked — memo is final.':(all?'All checks green. You may lock.':'Resolve the red checks to lock. The console hard-locks at 0:00:00 regardless.'); }
+}
+function doLock(forced){
+  if(S.locked) return;
+  if(!forced&&!confirm('Lock the console and compile the Board Memo? No edits after this.')) return;
+  S.locked=true; save(); applyLockUI(); buildMemo(); $('memoOverlay').classList.remove('hidden');
+}
+function applyLockUI(){
+  document.querySelectorAll('#app input, #app textarea, #app select, .sig, .lib-chip, #addStrat, .del-btn, #addFactorBtn, #addCritBtn, #sensBtn, #lockBtn').forEach(el=>{ el.disabled=true; el.style.pointerEvents='none'; });
+  const banner=document.createElement('div'); banner.className='locked-banner';
+  banner.textContent='🔒 Console locked. The Board Memo is your submission — print or save it as PDF and hand it to the floor runner.';
+  document.querySelector('.main').prepend(banner);
+}
+function downloadJSON(){
+  const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='zeal_team'+String(S.team.no).padStart(2,'0')+'_backup.json'; a.click();
+}
+/* ============ MEMO ============ */
+function buildMemo(){
+  const m=S.team.members;
+  const chosen=S.s2.strats[S.s5.chosen];
+  const owner=r=>'<span class="owner-tag">['+ROLES[r]+(m[r]?' · '+esc(m[r]):'')+']</span>';
+  let h='<div class="mhead"><span class="eyebrow">CASEQUEST · SANKALAN 2026 · CONFIDENTIAL BOARD PAPER</span>'+
+   '<h1>ZEAL — The Five Doors · Board Memo</h1>'+
+   '<div class="memo-kv">TEAM '+String(S.team.no).padStart(2,'0')+' · '+esc(S.team.name)+' — CFO: '+esc(m.cfo||'—')+' · CMO: '+esc(m.cmo||'—')+' · COO: '+esc(m.coo||'—')+' · Chief Analyst: '+esc(m.analyst||'—')+'</div>'+
+   '<div class="memo-kv">Filed '+new Date().toLocaleString()+' · Capital regime: ₹'+capNow()+' Cr'+(S.twistFired?' (post-Red-Envelope)':'')+(S.locked?' · LOCKED':' · DRAFT — not yet locked')+'</div></div>';
+
+  h+='<h2>M1 — Understanding of the problem <span class="mscore">/20</span></h2>';
+  h+='<p><b>Problem statement:</b> '+esc(S.s1.prob||'—')+'</p>';
+  h+='<p><b>Core tension:</b> '+esc(S.s1.tA||'—')+' <b>vs</b> '+esc(S.s1.tB||'—')+'</p>';
+  h+='<p style="margin-top:7px"><b>Signal Sort — the six statements marked decision-critical:</b></p><ul>';
+  S.s1.signals.forEach((p,i)=>{ if(p) h+='<li>'+esc(SIGNALS[i].t)+'</li>'; });
+  h+='</ul><p style="margin-top:7px"><b>Four-lens reading:</b></p><ul>';
+  ['cfo','cmo','coo','analyst'].forEach(r=>{ h+='<li>'+owner(r)+' '+esc(S.s1.lens[r]||'—')+'</li>'; });
+  h+='</ul>';
+
+  h+='<h2>M2 — Solutions considered <span class="mscore">/20</span></h2>';
+  h+='<p class="memo-kv">Doors opened during exploration: '+(S.s2.opened.length?S.s2.opened.map(x=>x.toUpperCase()).join(', '):'none')+'</p>';
+  h+='<table class="dt"><tr><th></th><th>Strategy</th><th>Doors</th><th>Sequence</th><th>Capital split</th><th>Thesis</th><th>Kill risk</th></tr>';
+  S.s2.strats.forEach((s,i)=>{
+    h+='<tr><td class="mono">'+String.fromCharCode(65+i)+(i===S.s5.chosen?' ★':'')+'</td><td><b>'+esc(s.name||'—')+'</b></td><td class="mono">'+s.doors.map(x=>x.toUpperCase()).join(' ')+'</td><td>'+esc(s.seq||'—')+'</td><td>'+esc(s.split||'—')+'</td><td>'+esc(s.thesis||'—')+'</td><td>'+esc(s.risk||'—')+'</td></tr>';
+  });
+  h+='</table>';
+
+  h+='<h2 class="pb">M3 — Factors that influence the solution <span class="mscore">/20</span></h2>';
+  h+='<table class="dt"><tr><th>#</th><th>Factor</th><th>Type</th><th>Impact</th><th>Uncert.</th><th>Quadrant</th><th>Owner</th></tr>';
+  S.s3.factors.forEach((f,i)=>{
+    const q=(f.impact>=3?(f.unc>=3?'Hedge it':'Act on it'):(f.unc>=3?'Watch it':'Park it'));
+    h+='<tr><td class="mono">'+(i+1)+(f.custom?'★':'')+'</td><td>'+esc(f.name)+'</td><td>'+f.type+'</td><td class="mono">'+f.impact+'</td><td class="mono">'+f.unc+'</td><td>'+q+'</td><td>'+ROLES[f.owner]+'</td></tr>';
+  });
+  h+='</table><p class="memo-kv">★ = team-authored factor</p>';
+
+  h+='<h2>M4 — Weightage to the solution <span class="mscore">/20</span></h2>';
+  h+='<table class="dt"><tr><th>Criterion</th><th>Weight</th>'+S.s2.strats.map((s,i)=>'<th>'+String.fromCharCode(65+i)+'</th>').join('')+'</tr>';
+  S.s4.crits.forEach((c,ci)=>{
+    h+='<tr><td>'+esc(c.name)+'</td><td class="mono">'+c.weight+'</td>'+S.s2.strats.map((s,si)=>'<td class="mono">'+(S.s4.scores[scoreKey(ci,si)]||'—')+'</td>').join('')+'</tr>';
+  });
+  h+='<tr><td><b>Weighted total</b></td><td class="mono">'+wsum()+'</td>'+S.s2.strats.map((s,si)=>'<td class="mono"><b>'+weightedTotal(si).toFixed(1)+'</b></td>').join('')+'</tr></table>';
+  if(S.s4.sens) h+='<p style="margin-top:6px"><b>Sensitivity stress-test:</b> '+esc(S.s4.sens)+'</p>';
+
+  h+='<h2 class="pb">M5 — Final solution <span class="mscore">/20</span></h2>';
+  h+='<p><b>Recommendation:</b> '+(chosen?('Strategy '+String.fromCharCode(65+S.s5.chosen)+' — '+esc(chosen.name)+' ('+chosen.doors.map(x=>x.toUpperCase()).join(' + ')+')'):'—')+'</p>';
+  if(S.twistFired) h+='<p style="border:1px solid #E4572E;border-radius:6px;padding:8px 10px;background:#FBEAE3"><b>Red Envelope response:</b> '+esc(S.twistResp||'—')+'</p>';
+  h+='<table class="dt"><tr><th>Allocation</th><th>₹ Cr</th></tr>';
+  DOORS.forEach((d,i)=>{ if(S.s5.alloc[d.id]>0) h+='<tr><td>D'+(i+1)+' · '+d.name+'</td><td class="mono">'+S.s5.alloc[d.id]+'</td></tr>'; });
+  h+='<tr><td>Reserve / contingency</td><td class="mono">'+(S.s5.alloc.reserve||0)+'</td></tr>';
+  h+='<tr><td><b>Total vs ceiling</b></td><td class="mono"><b>'+allocTotal()+' / '+capNow()+'</b></td></tr></table>';
+  const fr=S.s5.facRaj==='idle'?'Idle / divest review':DOORS.find(d=>d.id===S.s5.facRaj).name;
+  const fm=S.s5.facMah==='idle'?'Idle / divest review':DOORS.find(d=>d.id===S.s5.facMah).name;
+  h+='<p style="margin-top:7px"><b>Plants:</b> Rajasthan (dry) → '+fr+' · Maharashtra (wet) → '+fm+'</p>';
+  h+='<p><b>Distribution repurposed:</b> '+S.s5.dist+'% of the 14,000-touchpoint network'+(S.s5.dist>30?' — above the 30% threshold; agri revenue risk acknowledged':'')+'</p>';
+  h+='<p><b>Hiring ('+hireSum()+'/15):</b> '+HIRE_FN.map((f,i)=>f+' '+(S.s5.hires[i]||0)).join(' · ')+'</p>';
+  h+='<table class="dt"><tr><th>Phase</th><th>Focus & milestones</th><th>Go / kill criterion</th></tr>';
+  [['P1 · 0–9 m',0],['P2 · 9–21 m',1],['P3 · 21–36 m',2]].forEach(([lbl,i])=>{
+    h+='<tr><td class="mono">'+lbl+'</td><td>'+esc(S.s5.phases[i]||'—')+'</td><td>'+esc(S.s5.kills[i]||'—')+'</td></tr>';
+  });
+  h+='</table>';
+  const rej=chosen?DOORS.filter(d=>!chosen.doors.includes(d.id)):[];
+  if(rej.length){ h+='<p style="margin-top:7px"><b>The doors we did not open:</b></p><ul>';
+    rej.forEach(d=>{ h+='<li><b>'+d.name+':</b> '+esc(S.s5.rejected[d.id]||'—')+'</li>'; }); h+='</ul>'; }
+  h+='<p style="margin-top:7px"><b>Risk register:</b></p><table class="dt"><tr><th>#</th><th>Risk</th><th>Mitigation / trigger</th></tr>';
+  S.s5.risks.forEach((r,i)=>{ h+='<tr><td class="mono">R'+(i+1)+'</td><td>'+esc(r[0]||'—')+'</td><td>'+esc(r[1]||'—')+'</td></tr>'; });
+  h+='</table>';
+  h+='<p style="margin-top:7px"><b>The Chairman\u2019s three questions.</b></p><ul>'+
+     '<li><b>Why this?</b> '+esc(S.s5.chairman.t||'—')+'</li>'+
+     '<li><b>Why now?</b> '+esc(S.s5.chairman.n||'—')+'</li>'+
+     '<li><b>Why us?</b> '+esc(S.s5.chairman.u||'—')+'</li></ul>';
+  h+='<p class="memo-kv" style="margin-top:16px;border-top:1.5px solid #C9D0DA;padding-top:8px">Judge scoring: M1–M5 × 20 pts each · rubric in the Judge Console · '+ (S.locked?'submission is final':'draft view') +'</p>';
+  $('memoSheet').innerHTML=h;
+}
+
+/* ============ BOOT ============ */
+initSetup();
+</script>
+</body>
+</html>

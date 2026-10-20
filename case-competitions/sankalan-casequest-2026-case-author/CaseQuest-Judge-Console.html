@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CaseQuest Judge Console · ZEAL — The Five Doors · Sankalan 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#ECEEF1;--card:#fff;--ink:#161D29;--steel:#43526B;--muted:#6B7787;--line:#C9D0DA;--line-soft:#DFE4EA;
+--indigo:#23355C;--indigo-deep:#172441;--flame:#E4572E;--flame-soft:#FBEAE3;--brass:#8F6E14;--brass-soft:#F6EFD9;--verd:#1F6F5C;--verd-soft:#E2F0EC;--danger:#B3261E;
+--disp:'Bricolage Grotesque',Georgia,serif;--body:'IBM Plex Sans',-apple-system,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.55}
+h1,h2,h3{font-family:var(--disp);line-height:1.15}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--mono)}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 16px;font-weight:600;font-size:14px;cursor:pointer;font-family:var(--body)}
+.btn-primary{background:var(--indigo);border-color:var(--indigo);color:#fff}
+input{font-family:var(--body);font-size:14px;border:1px solid var(--line);border-radius:7px;padding:7px 9px}
+input:focus,button:focus-visible{outline:2.5px solid var(--indigo);outline-offset:1px}
+.topbar{background:var(--indigo-deep);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.topbar h1{font-size:19px;font-weight:800}
+.topbar small{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:#9DA9C4;display:block}
+.tabs{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.tab{border:1px solid rgba(255,255,255,.25);background:transparent;color:#D8DEEC;border-radius:999px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--body)}
+.tab.active{background:#fff;color:var(--ink);border-color:#fff}
+.wrap{max-width:1180px;margin:0 auto;padding:26px 26px 80px}
+.view{display:none}.view.visible{display:block}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 2px rgba(22,29,41,.06),0 8px 24px rgba(22,29,41,.08);padding:22px;margin-bottom:18px}
+.panel h2{font-size:22px;margin-bottom:4px}
+.panel .hint{font-size:13px;color:var(--muted);margin-bottom:14px}
+table.dt{width:100%;border-collapse:collapse;font-size:13.5px}
+table.dt th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1.5px solid var(--line);padding:8px 9px}
+table.dt td{border-bottom:1px solid var(--line-soft);padding:8px 9px;vertical-align:top}
+.band{display:inline-block;font-family:var(--mono);font-size:10.5px;border-radius:5px;padding:2px 8px;margin-right:6px}
+.b4{background:var(--verd-soft);color:var(--verd)}.b3{background:#E7EBF4;color:var(--indigo)}.b2{background:var(--brass-soft);color:var(--brass)}.b1{background:var(--flame-soft);color:var(--flame)}
+.score-in{width:64px;text-align:center;font-family:var(--mono);font-weight:600}
+.score-in.bad{border-color:var(--danger);background:#FBEAE9}
+.total{font-family:var(--mono);font-weight:700;font-size:15px}
+.rankchip{font-family:var(--mono);font-size:11px;background:var(--ink);color:#fff;border-radius:5px;padding:2px 8px}
+.lb-row{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+.lb-row .pos{font-family:var(--mono);font-weight:700;width:34px;text-align:right}
+.lb-row .nm{width:240px;font-weight:600;font-size:14px}
+.lb-row .bar{flex:1;height:26px;background:var(--line-soft);border-radius:7px;overflow:hidden}
+.lb-row .bar i{display:block;height:100%;background:var(--indigo);transition:width .3s}
+.lb-row.p1 .bar i{background:var(--brass)}.lb-row.p2 .bar i{background:#5B708F}.lb-row.p3 .bar i{background:#9A6B3F}
+.lb-row .pts{font-family:var(--mono);font-weight:700;width:70px}
+.ros td:first-child{font-family:var(--mono);white-space:nowrap;color:var(--indigo);font-weight:600}
+.key-block{border-left:3px solid var(--brass);padding:2px 0 2px 14px;margin:12px 0}
+.flag{color:var(--flame);font-weight:700}
+@media print{
+ .topbar,.tabs,.no-print{display:none!important}
+ body{background:#fff}
+ .panel{box-shadow:none;border:none;padding:0;margin-bottom:14px}
+ .view{display:none}.view.print-me{display:block!important}
+ .rubric-card{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div><h1>ZEAL · The Five Doors — Judge Console</h1><small>CASEQUEST · SANKALAN 2026 · CONFIDENTIAL — JUDGES & ORGANISERS ONLY</small></div>
+  <nav class="tabs">
+    <button class="tab active" data-v="ros">Run of show</button>
+    <button class="tab" data-v="rubric">Rubric</button>
+    <button class="tab" data-v="key">Case key</button>
+    <button class="tab" data-v="score">Score teams</button>
+    <button class="tab" data-v="board">Leaderboard</button>
+  </nav>
+</header>
+<div class="wrap">
+
+<!-- RUN OF SHOW -->
+<section class="view visible" id="v-ros">
+  <div class="panel">
+    <h2>Run of show — 180-minute sprint</h2>
+    <p class="hint">Each team runs the Team Console on its own laptop. The console auto-saves locally, fires the Red Envelope itself at 90:00 elapsed, and hard-locks at 180:00. Your job: brief, watch, collect, score.</p>
+    <table class="dt ros">
+      <tr><th>Clock</th><th>What happens</th><th>Organiser actions</th></tr>
+      <tr><td>T − 15:00</td><td>Teams seated, consoles open on the setup screen.</td><td>Verify each laptop shows the setup screen. Teams enter team number, name, and assign the four chairs (CFO / CMO / COO / Chief Analyst).</td></tr>
+      <tr><td>0:00:00</td><td>All teams click "Enter the boardroom" together. Clock starts per laptop.</td><td>Count down from the stage. Spot-check a few consoles show 3:00:00.</td></tr>
+      <tr><td>0:00–0:20</td><td><b>Agenda 00 · Brief</b> — mandate, board personas, resource pool, rules.</td><td>No interventions. Take questions on logistics only, never on the case.</td></tr>
+      <tr><td>0:20–0:45</td><td><b>Agenda 01 · Frame</b> (M1) — Signal Sort, problem statement, four-lens reading.</td><td>—</td></tr>
+      <tr><td>0:45–1:25</td><td><b>Agenda 02 · Explore</b> (M2) — five door dossiers with role-tabbed intel; teams build 2–4 strategies.</td><td>Watch for teams splitting up by chair — that is the design working.</td></tr>
+      <tr><td>1:25–1:55</td><td><b>Agenda 03 · Forces</b> (M3) — factor builder and live impact × uncertainty map.</td><td>—</td></tr>
+      <tr><td><b>1:30:00</b></td><td><b style="color:var(--flame)">✉ THE RED ENVELOPE fires automatically on every console.</b> Capital cut to ₹420 Cr + the Saanjh Naturals offer.</td><td>Expect noise. Announce once: "The envelope is real. The console has re-set your capital gauge."</td></tr>
+      <tr><td>1:55–2:20</td><td><b>Agenda 04 · Weigh</b> (M4) — criteria, weights to exactly 100, decision matrix, ±10 stress test.</td><td>—</td></tr>
+      <tr><td>2:20–3:00</td><td><b>Agenda 05 · Decide</b> (M5) — allocation, plants, network, hires, roadmap, kill criteria, rejected-door defence, Chairman's three questions, twist response.</td><td>10-minute and 2-minute warnings from the stage.</td></tr>
+      <tr><td>3:00:00</td><td>Consoles hard-lock and compile the <b>Board Memo</b>.</td><td>Teams print / save memo as PDF (every laptop: Ctrl+P → Save as PDF). Runners collect files or printouts, labelled by team number.</td></tr>
+      <tr><td>After</td><td>Judging.</td><td>Score each memo on the five metrics in the Score tab; the Leaderboard ranks live. Optional: top 5 teams give a 5-minute defence, any chair may be questioned.</td></tr>
+    </table>
+    <p class="hint" style="margin-top:12px">Contingencies: a laptop crash mid-game is survivable — the console auto-saves; reopen the file and click <b>Resume</b>. A team that clears its browser data loses its work; tell teams not to touch browser settings. The backup-JSON button in Agenda 05 is the belt-and-braces.</p>
+  </div>
+</section>
+
+<!-- RUBRIC -->
+<section class="view" id="v-rubric">
+  <div class="panel no-print" style="display:flex;justify-content:space-between;align-items:center">
+    <div><h2 style="font-size:19px">Scoring rubric — 5 metrics × 20 points</h2>
+    <p class="hint" style="margin:0">Print one per judge per team if scoring on paper, or score directly in the Score tab.</p></div>
+    <button class="btn btn-primary" onclick="printView('rubric')">🖨 Print rubric</button>
+  </div>
+  <div id="rubricCards"></div>
+</section>
+<!-- CASE KEY -->
+<section class="view" id="v-key">
+  <div class="panel">
+    <h2>Case key — what strong answers look like</h2>
+    <p class="hint">Not a single right answer; a map of the terrain. Reward teams that find the structure, punish teams that ignore it.</p>
+
+    <div class="key-block"><b>Signal Sort answer key (M1).</b> The six decision-critical statements are #1 (capital is a hard ceiling), #3 (one large line or two small — never three), #5 (brand attribute asymmetry: 84/79/81 vs modern 22 / personal 9), #7 (network repurposing degrades the agri base), #9 (talent gap + 15-hire cap), #11 (one shot in 72 hours → sequencing & reversibility). The other six are noise. 6/6 with a problem statement built on them is top-band M1.</div>
+
+    <div class="key-block"><b>The hidden structure (M2).</b> The doors collide over shared assets — strong teams discover this and design around it:
+    <ul style="margin:8px 0 0 18px">
+      <li><b>Rajasthan (dry)</b> is wanted by D1 (putty/adhesives) <i>and</i> D2 (nutrition powders).</li>
+      <li><b>Maharashtra (wet)</b> is wanted by D3 (creams/serums) <i>and</i> D4 (paints/primers).</li>
+      <li><b>Capacity rule</b> (one large or two small lines) makes most three-door plans physically impossible.</li>
+      <li><b>D5 consumes no factory at all</b> — it monetises the network itself, but burns capital fastest and risks channel conflict.</li>
+      <li><b>D1 + D4 form a natural "construction stack"</b>: shared raw-material advantage, shared building-materials retail, same brand logic, and the mason (D4) becomes the pull engine for D1 products before Asian Paints/Berger arrive.</li>
+    </ul></div>
+
+    <div class="key-block"><b>Strong strategy archetypes (M2/M5).</b>
+    <ul style="margin:8px 0 0 18px">
+      <li><b>The Construction Stack:</b> D4 first (cheapest, builds the mason channel), folding into D1 before the 18-month competitor entry. Capital fits even post-cut (₹140–170 + ₹180–220 stretches ₹420 — expect phasing or a scope cut, which is good thinking, not weakness).</li>
+      <li><b>The Patient Categorist:</b> D1 as the cash engine + D2 as the slow category bet, both on staged gates (the two-small-lines configuration: D1 in Rajasthan at reduced scale + D2 sachets). Must acknowledge the shared-plant tension explicitly.</li>
+      <li><b>The Buy-not-Build pivot (post-twist):</b> Saanjh at ₹85 Cr ≈ 1.37× revenue with 41% GM is a capital-efficient answer to Door 3's "build everything from zero" problem — it buys brand, talent and channel at a fraction of ₹280–320 Cr. Top teams will note integration/founder risk and that Bharat must stay an invisible holding brand.</li>
+      <li><b>The Platform Layer:</b> D5 asset-light (₹140–160 Cr) layered on top of one physical door, framed as optionality. Reward teams that catch the asset-light variant in the CFO pack rather than pricing the full build.</li>
+    </ul></div>
+
+    <div class="key-block"><b>Red flags (any metric).</b>
+    <ul style="margin:8px 0 0 18px">
+      <li><span class="flag">Opening 3+ doors</span> — capacity and capital make it fiction.</li>
+      <li><span class="flag">Ignoring the factory collision</span> — e.g., recommending D1 + D2 at full scale with no mention of Rajasthan.</li>
+      <li><span class="flag">Spending the full ceiling post-twist</span> — allocating ₹420 of ₹420 with no reserve tells the Group CFO they learned nothing.</li>
+      <li><span class="flag">A cosmetic twist response</span> — shrinking every line item 16% instead of re-deciding.</li>
+      <li><span class="flag">No kill criteria</span> — "one shot" demands knowing when to stop.</li>
+    </ul></div>
+
+    <div class="key-block"><b>The twist, read correctly (M5).</b> The Red Envelope tests whether the team's logic was load-bearing. The cut (₹500→₹420) should force re-sequencing or scope discipline, not panic. Saanjh is a genuine fork: engaging is smart <i>if</i> the team had aspiration-market logic; declining is smart <i>if</i> they argue focus and integration risk. Score the reasoning, not the choice.</div>
+  </div>
+</section>
+
+<!-- SCORING -->
+<section class="view" id="v-score">
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <div><h2>Score the fifteen teams</h2><p class="hint" style="margin:0">0–20 per metric. Totals and ranks compute live and persist on this laptop. Tie-break: higher M5, then M1.</p></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn" onclick="exportCSV()">⬇ Export CSV</button>
+        <button class="btn" onclick="resetScores()">Reset all</button>
+      </div>
+    </div>
+    <div style="overflow:auto;margin-top:14px">
+    <table class="dt" id="scoreTable">
+      <thead><tr><th>#</th><th style="min-width:170px">Team name</th><th>M1<br>Understanding</th><th>M2<br>Solutions</th><th>M3<br>Factors</th><th>M4<br>Weightage</th><th>M5<br>Final</th><th>Total</th><th>Rank</th></tr></thead>
+      <tbody id="scoreBody"></tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- LEADERBOARD -->
+<section class="view" id="v-board">
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h2>Leaderboard</h2>
+      <button class="btn btn-primary no-print" onclick="printView('board')">🖨 Print results</button>
+    </div>
+    <p class="hint">Project this for the reveal. Ranks update as scores are entered.</p>
+    <div id="lb"></div>
+  </div>
+</section>
+
+</div>
+<script>
+const LS={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const KEY='zeal_judge_v1';
+const METRICS=['M1 Understanding of the problem','M2 Multiple solutions provided','M3 Factors that influence the solution','M4 Weightage to the solution','M5 Final solution provided'];
+const RUBRIC=[
+ {m:'M1 — Understanding of the problem',what:'Problem statement, core tension, Signal Sort, four-lens reading.',
+  bands:[['17–20','Sees the constraints as a system: capital ceiling, factory capacity rule, brand asymmetry, network trade-off, one-shot mandate. Problem statement is crisp (≤40 words) and decision-shaped; tension well chosen; 5–6 correct signals; all four lenses sharp and distinct.'],
+  ['13–16','Most constraints identified but treated as a list, not a system. Problem statement adequate; 4–5 correct signals; lenses filed but uneven across chairs.'],
+  ['9–12','Restates the situation rather than the problem. Misses a central constraint (usually the factory rule or the network trade-off). ≤4 correct signals.'],
+  ['0–8','Problem framed as "pick the best market." Signals largely wrong; lenses generic or missing.']]},
+ {m:'M2 — Multiple solutions provided',what:'2–4 strategy cards: doors, sequence, capital split, thesis, kill risk.',
+  bands:[['17–20','≥2 genuinely different bets (not volume variants). At least one exploits an interdependency (construction stack, two-small-lines, asset-light platform, buy-vs-build). Sequencing is reasoned; every card names its kill risk honestly.'],
+  ['13–16','Two solid distinct strategies with sensible sequencing; interdependencies partially seen; theses clear but safe.'],
+  ['9–12','Strategies are variations of one idea, or door combinations that violate capacity/capital without acknowledgement.'],
+  ['0–8','One real option padded to two; no sequencing logic; kill risks vague or absent.']]},
+ {m:'M3 — Factors that influence the solution',what:'≥8 factors, internal/external, impact × uncertainty ratings, owners.',
+  bands:[['17–20','Breadth with materiality: competitive timing, regulatory, channel conflict, talent, payback window all present. Ratings discriminate (not everything 4/4). Custom factors are genuinely material. Factors visibly shaped the Stage 4 criteria.'],
+  ['13–16','8–10 sound factors, mostly well rated; internal/external balance fine; weak linkage to the eventual decision.'],
+  ['9–12','Library factors accepted wholesale with default-ish ratings; little discrimination; owners assigned mechanically.'],
+  ['0–8','Fewer than 8 factors or ratings that contradict the case facts.']]},
+ {m:'M4 — Weightage to the solution',what:'5–7 criteria, weights = 100, full matrix, sensitivity stress test.',
+  bands:[['17–20','Criteria are distinct, decision-relevant, and traceable to the mandate and the factor map. Weight ordering is defensible aloud. Matrix scored consistently with the dossier facts. Ran the ±10 stress test and engaged with the result — especially if the winner flipped.'],
+  ['13–16','Reasonable criteria and weights; scoring broadly consistent; stress test run but not interpreted.'],
+  ['9–12','Overlapping criteria (e.g., "growth" and "market size" both at high weight); weights look reverse-engineered to bless a favourite; matrix gaps.'],
+  ['0–8','Weights don\u2019t total 100, matrix incomplete, or scores contradict the team\u2019s own factor analysis.']]},
+ {m:'M5 — Final solution provided',what:'One recommendation, closed resource maths, roadmap with kill criteria, rejected-door defence, Chairman\u2019s three questions, twist response.',
+  bands:[['17–20','One clear call. Maths closes post-twist: ≤ ₹420 Cr with a visible reserve, plants assigned within format and capacity rules, ≤15 hires aimed at the real talent gap, network load justified. Kill criteria are measurable. Rejected doors get firm, specific one-liners. Twist response re-decides rather than shrinks; Saanjh engaged or declined with reasoning. Three questions answered without flinching.'],
+  ['13–16','Clear recommendation, maths mostly closed; minor feasibility slips (e.g., plant fit unexamined); twist absorbed but conservatively; rejected doors defended generically.'],
+  ['9–12','Recommendation hedges across doors; over-allocation or no reserve; kill criteria unmeasurable; twist response cosmetic.'],
+  ['0–8','Maths doesn\u2019t close, twist ignored, or no real decision made.']]}
+];
+let J=load()||{teams:Array.from({length:15},(_,i)=>({name:'Team '+String(i+1).padStart(2,'0'),s:[null,null,null,null,null]}))};
+function load(){const r=LS.get(KEY);if(!r)return null;try{return JSON.parse(r)}catch(e){return null}}
+function save(){LS.set(KEY,JSON.stringify(J))}
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('visible'));
+    document.getElementById('v-'+t.dataset.v).classList.add('visible');
+  };
+});
+function printView(v){
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('print-me'));
+  document.getElementById('v-'+v).classList.add('print-me');
+  window.print();
+}
+/* rubric cards */
+document.getElementById('rubricCards').innerHTML=RUBRIC.map(r=>
+ '<div class="panel rubric-card"><h3 style="font-size:17px">'+r.m+' <span class="mono" style="font-size:11px;color:var(--muted)">/20</span></h3>'+
+ '<p class="hint" style="margin:4px 0 10px">Artifact: '+r.what+'</p><table class="dt">'+
+ r.bands.map((b,i)=>'<tr><td style="width:90px"><span class="band b'+(4-i)+'">'+b[0]+'</span></td><td style="font-size:13px">'+b[1]+'</td></tr>').join('')+
+ '</table></div>').join('');
+
+/* scoring */
+function total(t){return t.s.reduce((a,b)=>a+(b==null?0:+b),0)}
+function complete(t){return t.s.every(v=>v!=null)}
+function ranks(){
+  const idx=J.teams.map((t,i)=>i).filter(i=>complete(J.teams[i]));
+  idx.sort((a,b)=>{
+    const ta=J.teams[a],tb=J.teams[b];
+    return total(tb)-total(ta) || (tb.s[4]-ta.s[4]) || (tb.s[0]-ta.s[0]);
+  });
+  const r={};idx.forEach((i,p)=>r[i]=p+1);return r;
+}
+function renderScores(){
+  const tb=document.getElementById('scoreBody');tb.innerHTML='';
+  const r=ranks();
+  J.teams.forEach((t,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td class="mono">'+String(i+1).padStart(2,'0')+'</td>'+
+      '<td><input value="'+esc(t.name)+'" data-nm="'+i+'" style="width:100%"></td>'+
+      t.s.map((v,m)=>'<td><input type="number" min="0" max="20" class="score-in" value="'+(v==null?'':v)+'" data-t="'+i+'" data-m="'+m+'"></td>').join('')+
+      '<td class="total">'+(complete(t)?total(t)+' / 100':'—')+'</td>'+
+      '<td>'+(r[i]?'<span class="rankchip">#'+r[i]+'</span>':'')+'</td>';
+    tb.appendChild(tr);
+  });
+  tb.querySelectorAll('[data-nm]').forEach(el=>{el.oninput=()=>{J.teams[+el.dataset.nm].name=el.value;save();renderLB();};});
+  tb.querySelectorAll('.score-in').forEach(el=>{
+    el.oninput=()=>{
+      let v=el.value===''?null:+el.value;
+      if(v!=null&&(v<0||v>20)){el.classList.add('bad');return}
+      el.classList.remove('bad');
+      J.teams[+el.dataset.t].s[+el.dataset.m]=v;save();refreshTotals();renderLB();
+    };
+  });
+}
+function refreshTotals(){
+  const r=ranks();
+  document.querySelectorAll('#scoreBody tr').forEach((tr,i)=>{
+    const t=J.teams[i];
+    tr.children[7].textContent=complete(t)?total(t)+' / 100':'—';
+    tr.children[8].innerHTML=r[i]?'<span class="rankchip">#'+r[i]+'</span>':'';
+  });
+}
+function renderLB(){
+  const box=document.getElementById('lb');
+  const done=J.teams.map((t,i)=>({t,i})).filter(x=>complete(x.t));
+  if(!done.length){box.innerHTML='<p class="hint">No fully scored teams yet — totals appear once all five metrics are entered.</p>';return}
+  done.sort((a,b)=>total(b.t)-total(a.t)||(b.t.s[4]-a.t.s[4])||(b.t.s[0]-a.t.s[0]));
+  const max=Math.max(...done.map(x=>total(x.t)),1);
+  box.innerHTML=done.map((x,p)=>
+   '<div class="lb-row p'+(p+1)+'"><span class="pos">'+(p+1)+'</span><span class="nm">'+esc(x.t.name)+'</span>'+
+   '<span class="bar"><i style="width:'+(total(x.t)/max*100)+'%"></i></span><span class="pts">'+total(x.t)+'</span></div>').join('')+
+   '<p class="hint" style="margin-top:10px">Tie-break applied: total, then M5, then M1.</p>';
+}
+function exportCSV(){
+  let csv='Team No,Team Name,'+METRICS.join(',')+',Total\n';
+  J.teams.forEach((t,i)=>{csv+=(i+1)+',"'+t.name.replace(/"/g,'""')+'",'+t.s.map(v=>v==null?'':v).join(',')+','+(complete(t)?total(t):'')+'\n';});
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='casequest_zeal_scores.csv';a.click();
+}
+function resetScores(){
+  if(!confirm('Clear all names and scores on this laptop?'))return;
+  J={teams:Array.from({length:15},(_,i)=>({name:'Team '+String(i+1).padStart(2,'0'),s:[null,null,null,null,null]}))};
+  save();renderScores();renderLB();
+}
+renderScores();renderLB();
+</script>
+</body>
+</html>
